@@ -19,6 +19,36 @@
    NAITHIKA – WHATSAPP FLOAT BUTTON
    =============================== */
 
+
+   .product-disabled-btn {
+        background-color: #cccccc;
+        color: #777777;
+        cursor: not-allowed;
+        opacity: 0.8;
+        border: none;
+        padding: 10px 20px; /* Standard padding */
+        font-size: 16px;    /* Standard font size */
+        border-radius: 4px; /* Optional: adds rounded corners */
+        width: 100%;        /* Keeps button full width of its container */
+        margin-top: 10px;
+    }
+
+    /* Mobile styles (applies to screens 768px or smaller) */
+    @media (max-width: 768px) {
+        .product-disabled-btn {
+            padding: 6px 12px; /* Much smaller padding */
+            font-size: 13px;   /* Smaller text */
+            margin-top: 5px;   /* Less space above the button */
+        }
+        
+        /* Optional: Ensure the image doesn't take up the whole screen on mobile */
+        .product-image-container img {
+            max-height: 150px; 
+            object-fit: contain; 
+            width: 100%;
+        }
+    }
+
 .naithika-whatsapp-float {
     position: fixed;
     right: 20px;
@@ -167,7 +197,12 @@
             <div class="product-card">
                 <div class="product-card-inner">
                     <div class="product-card-front">
-                        <div class="product-image-container">
+                        <div class="product-image-container" style="position: relative;">
+                            
+                            <div style="position: absolute; top: 10px; left: 10px; background-color: #555555; color: #ffffff; padding: 4px 12px; border-radius: 4px; font-weight: bold; font-size: 13px; z-index: 2; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                                Coming Soon
+                            </div>
+
                             <img src="images_naithika/products_new/mango.webp" alt="Dehydrated Mango Slices" onerror="this.onerror=null; this.src='https://placehold.co/400x200/a65e5e/ffffff?text=Mango+Dehydrated'">
                         </div>
                         <div class="product-content">
@@ -179,12 +214,14 @@
                             </div>
                             <p class="product-price" style="color: #e97b06;">₹250/100g</p>
                         </div>
-                        <div class="product-buy-button-container" >
+                        <div class="product-buy-button-container">
+                            
                             <button class="product-buy-button product-front-buy-button"
-                            onclick="addToCart('Mango', 250, 'images_naithika/products_new/mango.webp')"
-                            style="background-color: #e97b06;">
+                            disabled
+                            style="background-color: #cccccc; color: #777777; cursor: not-allowed; opacity: 0.8; border: none;">
                             Add To Cart
                             </button>
+
                         </div>
                     </div>
                     <div class="product-card-back">
@@ -202,11 +239,11 @@
                             <p class="product-price-back" style="color: #e97b06;">Price: ₹250/100g</p>
                         </div>
                         <div class="product-back-action-container">
-                           <a href="#" class="product-less-link" style="color: #e97b06;">...less</a>
+                            <a href="#" class="product-less-link" style="color: #e97b06;">...less</a>
                         </div>
                     </div>
                 </div>
-            </div>
+</div>
 
             <div class="product-card">
                 <div class="product-card-inner">
@@ -258,6 +295,9 @@
                         <div class="product-image-container">
                             <img src="images_naithika/products_new/jamun.jpg" alt="Dehydrated Jamun Slices" onerror="this.onerror=null; this.src='https://placehold.co/400x200/a65e5e/ffffff?text=Jamun+Dehydrated'">
                         </div>
+                        <div style="position: absolute; top: 10px; left: 10px; background-color: #555555; color: #ffffff; padding: 4px 12px; border-radius: 4px; font-weight: bold; font-size: 13px; z-index: 2; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                                Coming Soon
+                            </div>
                         <div class="product-content">
                             <h3 class="product-title">Jamun</h3>
                             <div class="product-short-description-container">
@@ -269,10 +309,12 @@
                         </div>
                         <div class="product-buy-button-container">
                             <button class="product-buy-button product-front-buy-button"
+                            disabled
                             onclick="addToCart('Jamun', 280, 'images_naithika/products_new/jamun.jpg')"
-                            style="background-color: #e97b06;">
+                            style="background-color: #cccccc; color: #777777; cursor: not-allowed; opacity: 0.8; border: none;">
                             Add To Cart
                             </button>
+                           
                         </div>
                     </div>
                     <div class="product-card-back">
@@ -345,6 +387,10 @@
                         <div class="product-image-container">
                             <img src="realimages/apple.jpeg" alt="Dehydrated Apple Slices" onerror="this.onerror=null; this.src='https://placehold.co/400x200/a65e5e/ffffff?text=Apple+Dehydrated'">
                         </div>
+
+                        <div style="position: absolute; top: 10px; left: 10px; background-color: #555555; color: #ffffff; padding: 4px 12px; border-radius: 4px; font-weight: bold; font-size: 13px; z-index: 2; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                                Coming Soon
+                            </div>
                         <div class="product-content">
                             <h3 class="product-title">Apple</h3>
                             <div class="product-short-description-container">
@@ -356,8 +402,9 @@
                         </div>
                         <div class="product-buy-button-container">
                             <button class="product-buy-button product-front-buy-button"
+                            disabled
                             onclick="addToCart('Apple', 250, 'realimages/apple.jpeg')"
-                            style="background-color: #e97b06;">
+                            style="background-color: #cccccc; color: #777777; cursor: not-allowed; opacity: 0.8; border: none;">
                             Add To Cart
                             </button>
                         </div>
@@ -560,6 +607,10 @@
                         <div class="product-image-container">
                             <img src="images_naithika/products_new/pomegranate.jpg" alt="Dehydrated Pomegranate Arils" onerror="this.onerror=null; this.src='https://placehold.co/400x200/a65e5e/ffffff?text=Pomegranate Arils+Dehydrated'">
                         </div>
+
+                        <div style="position: absolute; top: 10px; left: 10px; background-color: #555555; color: #ffffff; padding: 4px 12px; border-radius: 4px; font-weight: bold; font-size: 13px; z-index: 2; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                                Coming Soon
+                            </div>
                         <div class="product-content">
                             <h3 class="product-title">Pomegranate Arils</h3>
                             <div class="product-short-description-container">
@@ -571,8 +622,9 @@
                         </div>
                         <div class="product-buy-button-container">
                             <button class="product-buy-button product-front-buy-button"
+                            disabled
                             onclick="addToCart('Pomegranate Arils', 250, 'images_naithika/products_new/pomegranate.jpg')"
-                            style="background-color: #e97b06;">
+                            style="background-color: #cccccc; color: #777777; cursor: not-allowed; opacity: 0.8; border: none;">
                             Add To Cart
                             </button>
                         </div>
@@ -1221,6 +1273,9 @@
                         <div class="product-image-container">
                             <img src="images_naithika/products/mango pickle.webp" alt="Mango Pickle" onerror="this.onerror=null; this.src='https://placehold.co/400x200/a65e5e/ffffff?text=Mango+Pickle'">
                         </div>
+                        <div style="position: absolute; top: 10px; left: 10px; background-color: #555555; color: #ffffff; padding: 4px 12px; border-radius: 4px; font-weight: bold; font-size: 13px; z-index: 2; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                                Coming Soon
+                            </div>
                         <div class="product-content">
                             <h3 class="product-title">Mango Pickle</h3>
                             <div class="product-short-description-container">
@@ -1231,9 +1286,11 @@
                             <p class="product-price"  style="color: #df2727;">₹180/- (200g)</p>
                         </div>
                         <div class="product-buy-button-container">
+                            
                             <button class="product-buy-button product-front-buy-button"
+                            disabled
                             onclick="addToCart('Mango Pickle', 180, 'images_naithika/products/mango pickle.webp')"
-                            style="background-color: #e97b06;">
+                            style="background-color: #cccccc; color: #777777; cursor: not-allowed; opacity: 0.8; border: none;">
                             Add To Cart
                             </button>
                         </div>
@@ -1753,7 +1810,7 @@
                                 <a href="#" class="product-more-link">...more</a>
                                 <a href="#" class="product-less-link-mob">...less</a>
                             </div>
-                            <p class="product-price">₹250/100g</p>
+                            <p class="product-price">₹250/80g</p>
                         </div>
                         <div class="product-buy-button-container">
                             <button class="product-buy-button product-front-buy-button"
@@ -1768,7 +1825,7 @@
                             <h4>Full Details: Moringa Tea </h4>
                             <p>Immunity-boosting moringa leaves gently dehydrated to preserve vibrant colour and nutrient profile. Rich in iron and calcium, this earthy blend supports daily wellness. Perfect for health-conscious tea lovers seeking natural vitality.</p>
                             
-                            <p class="product-price-back">Price: ₹250/100g</p>
+                            <p class="product-price-back">Price: ₹250/80g</p>
                         </div>
                         <div class="product-back-action-container">
                            <a href="#" class="product-less-link">...less</a>
@@ -1790,7 +1847,7 @@
                                 <a href="#" class="product-more-link">...more</a>
                                 <a href="#" class="product-less-link-mob">...less</a>
                             </div>
-                            <p class="product-price">₹250/100g</p>
+                            <p class="product-price">₹250/80g</p>
                         </div>
                         <div class="product-buy-button-container">
                             <button class="product-buy-button product-front-buy-button"
@@ -1804,7 +1861,7 @@
                         <div class="product-full-content">
                             <h4>Full Details: Lemon & Ginger Tea </h4>
                             <p>Bright lemon and warming ginger unite in this energising caffeine-light blend. Gently dehydrated to lock in natural warming properties and citrus zest. Ideal for comfort and digestion support, especially during cooler months.</p>
-                            <p class="product-price-back">Price: ₹250/100g</p>
+                            <p class="product-price-back">Price: ₹250/80g</p>
                         </div>
                         <div class="product-back-action-container">
                            <a href="#" class="product-less-link">...less</a>
@@ -1826,7 +1883,7 @@
                                 <a href="#" class="product-more-link">...more</a>
                                 <a href="#" class="product-less-link-mob">...less</a>
                             </div>
-                            <p class="product-price">₹280/100g</p>
+                            <p class="product-price">₹280/80g</p>
                         </div>
                         <div class="product-buy-button-container">
                             <button class="product-buy-button product-front-buy-button"
@@ -1840,7 +1897,7 @@
                         <div class="product-full-content">
                             <h4>Full Details: Amla–Beetroot Tea </h4>
                             <p>Tangy amla (Indian gooseberry) combined with earthy beetroot creates a unique wellness tea. Rich in Vitamin C and antioxidants, this blend supports immune and circulatory health. A conversation-starting addition to any tea collection.</p>
-                            <p class="product-price-back">Price: ₹280/100g</p>
+                            <p class="product-price-back">Price: ₹280/80g</p>
                         </div>
                         <div class="product-back-action-container">
                            <a href="#" class="product-less-link">...less</a>
@@ -1862,7 +1919,7 @@
                                 <a href="#" class="product-more-link">...more</a>
                                 <a href="#" class="product-less-link-mob">...less</a>
                             </div>
-                            <p class="product-price">₹250/100g</p>
+                            <p class="product-price">₹250/80g</p>
                         </div>
                         <div class="product-buy-button-container">
                             <button class="product-buy-button product-front-buy-button"
@@ -1876,7 +1933,7 @@
                         <div class="product-full-content">
                             <h4>Full Details: Mint Green Tea</h4>
                             <p>Fresh green tea leaves paired with cooling mint, gently dehydrated to preserve aroma and natural benefits. Caffeine-light and naturally refreshing, perfect for any time of day. A soothing, palate-cleansing choice.</p>
-                            <p class="product-price-back">Price: ₹250/100g</p>
+                            <p class="product-price-back">Price: ₹250/80g</p>
                         </div>
                         <div class="product-back-action-container">
                            <a href="#" class="product-less-link">...less</a>
@@ -1898,7 +1955,7 @@
                                 <a href="#" class="product-more-link">...more</a>
                                 <a href="#" class="product-less-link-mob">...less</a>
                             </div>
-                            <p class="product-price">₹250/100g</p>
+                            <p class="product-price">₹250/80g</p>
                         </div>
                         <div class="product-buy-button-container">
                             <button class="product-buy-button product-front-buy-button"
@@ -1912,7 +1969,7 @@
                         <div class="product-full-content">
                             <h4>Full Details: Ashwagandha Green Tea </h4>
                             <p>Adapt green tea blended with stress-relief ashwagandha herb, carefully dehydrated for maximum benefit. Designed to support calm and balance while delivering gentle, natural wellness. Perfect for mindful moments.</p>
-                            <p class="product-price-back">Price: ₹250/100g</p>
+                            <p class="product-price-back">Price: ₹250/80g</p>
                         </div>
                         <div class="product-back-action-container">
                            <a href="#" class="product-less-link">...less</a>
