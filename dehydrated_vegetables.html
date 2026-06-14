@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Products</title>
+    <title>Chemical-Free Dehydrated Vegetables | Naithika Foods Hyderabad</title>
+    <meta name="description" content="Stock up on our chemical-free dehydrated vegetables. Carefully dried to lock in nutrients and flavor, perfect for healthy home cooking.">
     <!-- Favicon link -->
     <link rel="icon" type="image/webp" href="images_naithika/logo.webp">
     
@@ -74,7 +75,7 @@
 <body>
 
     <!-- Header -->
-     <header id="header_top_bar">
+         <header id="header_top_bar">
         <div class="header_container">
             
             <div name="header_promo_message" class="header_promo_message">
@@ -87,13 +88,13 @@
                     CONTACT US
                 </a>
                 <a href="#" class="header_faq_link">+91 8106025114</a>
-                <a href="offer.html">SPECIAL OFFERS</a>
-                <span class="header_divider">|</span>
+                <!--<a href="offer.html">SPECIAL OFFERS</a>-->
+                <!--<span class="header_divider">|</span>-->
             </div>
         </div>
     </header>
 
-      <div id="header_main_content">
+    <div id="header_main_content">
     <div class="header_container">
 
         <a href="/">
@@ -122,13 +123,17 @@
                     <a href="dehydrated_fruits.html" class="dropdown-item">Fruit Leather</a>
                     <a href="dehydrated_vegetables.html" class="dropdown-item">Dehydrated Vegetables</a>
                     <a href="pickles_and_powders.html" class="dropdown-item">Pickles & Powders</a>
-                    <a href="herbal_tea.html" class="dropdown-item">Herbal Teas</a>
+                    <!--<a href="herbal_tea.html" class="dropdown-item">Herbal Teas</a>-->
                 </div>
             </div>
 
-            <a href="offer.html" class="nav-link">OFFERS</a>
+            <!--<a href="offer.html" class="nav-link">OFFERS</a>-->
             <a href="contact.html" class="nav-link">CONTACT US</a>
-            <a href="cart.html" class="nav-link">CART</a>
+            <a href="#" onclick="openAccount(); return false;" class="nav-link auth-nav-link" style="font-weight:bold; color:#e97b06;">LOGIN</a>
+            <a href="cart.html" class="nav-link"><span style="position: relative; display: inline-flex; align-items: center; margin-left: 5px;">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+    <span class="cart-badge" style="display:none; position: absolute; top: -8px; right: -10px; background: #e97b06; color: #fff; border-radius: 50%; min-width: 18px; height: 18px; align-items: center; justify-content: center; font-size: 11px; font-weight: bold; line-height: 1; padding: 2px;">0</span>
+</span></a>
         </nav>
 
         <!-- MOBILE MENU BUTTON -->
@@ -146,7 +151,7 @@
     <div class="header_nav_list">
         <a href="index.html" class="nav-link">HOME</a>
         <a href="about.html" class="nav-link">ABOUT US</a>
-        <a href="offer.html" class="nav-link">OFFERS</a>
+        <!--<a href="offer.html" class="nav-link">OFFERS</a>-->
 
         <!-- MOBILE PRODUCTS CATEGORY HEADING -->
         <span class="mobile_category_heading">PRODUCTS</span>
@@ -154,10 +159,14 @@
         <a href="dehydrated_fruits.html" class="mobile-sub-item">Fruit Leather</a>
         <a href="dehydrated_vegetables.html" class="mobile-sub-item">Dehydrated Vegetables</a>
         <a href="pickles_and_powders.html" class="mobile-sub-item">Pickles & Powders</a>
-        <a href="herbal_tea.html" class="mobile-sub-item">Herbal Teas</a>
+        <!--<a href="herbal_tea.html" class="mobile-sub-item">Herbal Teas</a>-->
 
         <a href="contact.html" class="nav-link">CONTACT US</a>
-        <a href="cart.html" class="nav-link">CART</a>
+        <a href="#" onclick="openAccount(); return false;" class="nav-link auth-nav-link" style="font-weight:bold; color:#e97b06;">LOGIN</a>
+            <a href="cart.html" class="nav-link"><span style="position: relative; display: inline-flex; align-items: center; margin-left: 5px;">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+    <span class="cart-badge" style="display:none; position: absolute; top: -8px; right: -10px; background: #e97b06; color: #fff; border-radius: 50%; min-width: 18px; height: 18px; align-items: center; justify-content: center; font-size: 11px; font-weight: bold; line-height: 1; padding: 2px;">0</span>
+</span></a>
     </div>
 </div>
 
@@ -165,7 +174,7 @@
         <h2 id="product-dehydrated-vegetables" class="product-section-heading" style="color: #218118de;">Dehydrated Vegetables</h2>
         <div class="product-grid">
 
-            <div class="product-card">
+                                                <div class="product-card">
                 <div class="product-card-inner">
                     <div class="product-card-front">
                         <div class="product-image-container">
@@ -178,7 +187,7 @@
                                 <a href="#" class="product-more-link" style="color: #218118de;">...more</a>
                                 <a href="#" class="product-less-link-mob" style="color: #218118de;">...less</a>
                             </div>
-                            <p class="product-price" style="color: #218118de;">₹180 / 100 g</p>
+                            <p class="product-price" style="color: #218118de;">₹180/-</p>
                         </div>
                         <div class="product-buy-button-container">
                             <button class="product-buy-button product-front-buy-button"
@@ -212,7 +221,7 @@
 
             
 
-            <div class="product-card">
+                                                <div class="product-card">
                 <div class="product-card-inner">
                     <div class="product-card-front">
                         <div class="product-image-container">
@@ -225,7 +234,7 @@
                                 <a href="#" class="product-more-link" style="color: #218118de;">...more</a>
                                 <a href="#" class="product-less-link-mob" style="color: #218118de;">...less</a>
                             </div>
-                            <p class="product-price" style="color: #218118de;">₹200/-100g</p>
+                            <p class="product-price" style="color: #218118de;">₹200/-</p>
                         </div>
                         <div class="product-buy-button-container">
                             <button class="product-buy-button product-front-buy-button"
@@ -255,7 +264,7 @@
                 </div>
             </div>
 
-            <div class="product-card">
+                                                <div class="product-card">
                 <div class="product-card-inner">
                     <div class="product-card-front">
                         <div class="product-image-container">
@@ -268,7 +277,7 @@
                                 <a href="#" class="product-more-link" style="color: #218118de;">...more</a>
                                 <a href="#" class="product-less-link-mob" style="color: #218118de;">...less</a>
                             </div>
-                            <p class="product-price" style="color: #218118de;">₹200/-100g</p>
+                            <p class="product-price" style="color: #218118de;">₹200/-</p>
                         </div>
                         <div class="product-buy-button-container">
                             <button class="product-buy-button product-front-buy-button"
@@ -298,7 +307,7 @@
                 </div>
             </div>
 
-            <div class="product-card">
+                                                <div class="product-card">
                 <div class="product-card-inner">
                     <div class="product-card-front">
                         <div class="product-image-container">
@@ -311,7 +320,7 @@
                                 <a href="#" class="product-more-link" style="color: #218118de;">...more</a>
                                 <a href="#" class="product-less-link-mob" style="color: #218118de;">...less</a>
                             </div>
-                            <p class="product-price" style="color: #218118de;">₹240/-100g</p>
+                            <p class="product-price" style="color: #218118de;">₹240/-</p>
                         </div>
                         <div class="product-buy-button-container">
                             <button class="product-buy-button product-front-buy-button"
@@ -341,7 +350,7 @@
                 </div>
             </div>
             
-            <div class="product-card">
+                                                <div class="product-card">
                 <div class="product-card-inner">
                     <div class="product-card-front">
                         <div class="product-image-container">
@@ -354,7 +363,7 @@
                                 <a href="#" class="product-more-link" style="color: #218118de;">...more</a>
                                 <a href="#" class="product-less-link-mob" style="color: #218118de;">...less</a>
                             </div>
-                            <p class="product-price" style="color: #218118de;">₹220/- 100g</p>
+                            <p class="product-price" style="color: #218118de;">₹220/-</p>
                         </div>
                         <div class="product-buy-button-container">
                             <button class="product-buy-button product-front-buy-button"
@@ -386,7 +395,7 @@
 
             
 
-            <div class="product-card">
+                                                <div class="product-card">
                 <div class="product-card-inner">
                     <div class="product-card-front">
                         <div class="product-image-container">
@@ -399,11 +408,11 @@
                                 <a href="#" class="product-more-link" style="color: #218118de;">...more</a>
                                 <a href="#" class="product-less-link-mob" style="color: #218118de;">...less</a>
                             </div>
-                            <p class="product-price" style="color: #218118de;">₹220/-100g</p>
+                            <p class="product-price" style="color: #218118de;">₹220/-</p>
                         </div>
                         <div class="product-buy-button-container">
                             <button class="product-buy-button product-front-buy-button"
-                            onclick="addToCart('Ash Gourd (Petha)', 220, 'realimages/ash_gourd.jpeg')"
+                             onclick="addToCart('Ash Gourd (Petha)', 220, 'realimages/ash_gourd.jpeg')"
                             style="background-color: #e97b06;">
                             Add To Cart
                             </button>
@@ -429,7 +438,7 @@
                 </div>
             </div>
 
-            <div class="product-card">
+                                                <div class="product-card">
                 <div class="product-card-inner">
                     <div class="product-card-front">
                         <div class="product-image-container">
@@ -442,7 +451,7 @@
                                 <a href="#" class="product-more-link" style="color: #218118de;">...more</a>
                                 <a href="#" class="product-less-link-mob" style="color: #218118de;">...less</a>
                             </div>
-                            <p class="product-price" style="color: #218118de;">₹200/100g</p>
+                            <p class="product-price" style="color: #218118de;">₹200/-</p>
                         </div>
                         <div class="product-buy-button-container">
                             <button class="product-buy-button product-front-buy-button"
@@ -472,7 +481,7 @@
                 </div>
             </div>
 
-            <div class="product-card">
+                                                <div class="product-card">
                 <div class="product-card-inner">
                     <div class="product-card-front">
                         <div class="product-image-container">
@@ -485,7 +494,7 @@
                                 <a href="#" class="product-more-link" style="color: #218118de;">...more</a>
                                 <a href="#" class="product-less-link-mob" style="color: #218118de;">...less</a>
                             </div>
-                            <p class="product-price" style="color: #218118de;">₹200/-100g</p>
+                            <p class="product-price" style="color: #218118de;">₹200/-</p>
                         </div>
                         <div class="product-buy-button-container">
                             <button class="product-buy-button product-front-buy-button"
@@ -515,7 +524,7 @@
                 </div>
             </div>
 
-            <div class="product-card">
+                                                <div class="product-card">
                 <div class="product-card-inner">
                     <div class="product-card-front">
                         <div class="product-image-container">
@@ -528,7 +537,7 @@
                                 <a href="#" class="product-more-link" style="color: #218118de;">...more</a>
                                 <a href="#" class="product-less-link-mob" style="color: #218118de;">...less</a>
                             </div>
-                            <p class="product-price" style="color: #218118de;">₹220/-100g</p>
+                            <p class="product-price" style="color: #218118de;">₹220/-</p>
                         </div>
                         <div class="product-buy-button-container">
                             <button class="product-buy-button product-front-buy-button"
@@ -559,7 +568,7 @@
                 </div>
             </div>
 
-            <div class="product-card">
+                                                <div class="product-card">
                 <div class="product-card-inner">
                     <div class="product-card-front">
                         <div class="product-image-container">
@@ -572,7 +581,7 @@
                                 <a href="#" class="product-more-link" style="color: #218118de;">...more</a>
                                 <a href="#" class="product-less-link-mob" style="color: #218118de;">...less</a>
                             </div>
-                            <p class="product-price" style="color: #218118de;">₹150/-100g</p>
+                            <p class="product-price" style="color: #218118de;">₹150/-</p>
                         </div>
                         <div class="product-buy-button-container">
                             <button class="product-buy-button product-front-buy-button"
@@ -602,7 +611,7 @@
                 </div>
             </div>
 
-            <div class="product-card">
+                                                <div class="product-card">
                 <div class="product-card-inner">
                     <div class="product-card-front">
                         <div class="product-image-container">
@@ -615,7 +624,7 @@
                                 <a href="#" class="product-more-link" style="color: #218118de;">...more</a>
                                 <a href="#" class="product-less-link-mob" style="color: #218118de;">...less</a>
                             </div>
-                            <p class="product-price" style="color: #218118de;">₹200/-100g</p>
+                            <p class="product-price" style="color: #218118de;">₹200/-</p>
                         </div>
                         <div class="product-buy-button-container">
                             <button class="product-buy-button product-front-buy-button"
@@ -644,7 +653,7 @@
                 </div>
             </div>
 
-            <div class="product-card">
+                                                <div class="product-card">
                 <div class="product-card-inner">
                     <div class="product-card-front">
                         <div class="product-image-container">
@@ -657,7 +666,7 @@
                                 <a href="#" class="product-more-link" style="color: #218118de;">...more</a>
                                 <a href="#" class="product-less-link-mob" style="color: #218118de;">...less</a>
                             </div>
-                            <p class="product-price" style="color: #218118de;">₹180/- 100g</p>
+                            <p class="product-price" style="color: #218118de;">₹180/-</p>
                         </div>
                         <div class="product-buy-button-container">
                             <button class="product-buy-button product-front-buy-button"
@@ -678,6 +687,98 @@
                                 <li>Vitamin C: High</li>
                             </ul>
                             <p class="product-price-back" style="color: #218118de;">Price: ₹180/- 100g</p>
+                        </div>
+                        <div class="product-back-action-container">
+                           <a href="#" class="product-less-link" style="color: #218118de;">...less</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+                                                <div class="product-card">
+                <div class="product-card-inner">
+                    <div class="product-card-front">
+                        <div class="product-image-container">
+                            <img src="images_naithika/products/Tomato Powder.webp" alt="Tomato Powder" onerror="this.onerror=null; this.src='https://placehold.co/400x200/a65e5e/ffffff?text=Tomato+Powder'">
+                        </div>
+                        <div class="product-content">
+                            <h3 class="product-title">Tomato Powder</h3>
+                            <div class="product-short-description-container">
+                                <span class="product-short-description-text"></span>
+                                <a href="#" class="product-more-link" style="color: #218118de;">...more</a>
+                                <a href="#" class="product-less-link-mob" style="color: #218118de;">...less</a>
+                            </div>
+                            <p class="product-price" style="color: #218118de;">₹200/-</p>
+                        </div>
+                        <div class="product-buy-button-container">
+                            <button class="product-buy-button product-front-buy-button"
+                            onclick="addToCart('Tomato Powder', 200, 'images_naithika/products/Tomato Powder.webp')"
+                            style="background-color: #e97b06;">
+                            Add To Cart
+                            </button>
+                        </div>
+                    </div>
+                    <div class="product-card-back">
+                        <div class="product-full-content">
+                            <h4 style="color: #218118de;">Full Details: Tomato Powder</h4>
+                                      <p>Slow-dried, ripe tomatoes ground into a bright, tangy powder. Perfect for seasoning, soups, and instant mixes - offering natural umami. A pantry essential year-round.</p>
+                            <h5 class="product-nutrition-heading">Nutritional Value (Per 100g)</h5>
+                            <ul class="product-nutrition-list">
+                                <li>Energy: 300 kcal</li>
+                                <li>Carbohydrates: 75 g</li>
+                                <li>Protein: 13 g</li>
+                                <li>Fat: 0.4 g</li>
+                                <li>Fiber: 17 g</li>
+                                <li>Vitamin A & C, Potassium: High</li>
+                            </ul>
+                            <p class="product-price-back" style="color: #218118de;">Price: ₹200/100g</p>
+                        </div>
+                        <div class="product-back-action-container">
+                           <a href="#" class="product-less-link" style="color: #218118de;">...less</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            
+                                                            <div class="product-card">
+                <div class="product-card-inner">
+                    <div class="product-card-front">
+                         <div class="product-image-container">
+                            <img src="realimages/garlic.jpeg" alt="Garlic Powder" onerror="this.onerror=null; this.src='https://placehold.co/400x200/a65e5e/ffffff?text=Garlic+Powder'">
+                        </div>
+                        <div class="product-content">
+                            <h3 class="product-title">Garlic Powder</h3>
+                            <div class="product-short-description-container">
+                                <span class="product-short-description-text"></span>
+                                <a href="#" class="product-more-link" style="color: #218118de;">...more</a>
+                                <a href="#" class="product-less-link-mob" style="color: #218118de;">...less</a>
+                            </div>
+                            <p class="product-price" style="color: #218118de;">₹150/-</p>
+                        </div>
+                        <div class="product-buy-button-container">
+                            <button class="product-buy-button product-front-buy-button"
+                            onclick="addToCart('Garlic Powder', 150, 'realimages/garlic.jpeg')"
+                            style="background-color: #e97b06;">
+                            Add To Cart
+                            </button>
+                        </div>
+                    </div>
+                    <div class="product-card-back">
+                        <div class="product-full-content">
+                            <h4 style="color: #218118de;">Full Details: Garlic Powder</h4>
+                                      <p>Pure powder made from fresh, aromatic garlic cloves. Sun-cured and gently dehydrated to retain aroma and savoury depth. Perfect for seasoning, marinades, and spice mixes.</p>
+                            <h5 class="product-nutrition-heading">Nutritional Value (Per 100g)</h5>
+                            <ul class="product-nutrition-list">
+                                 <li>Energy: 331 kcal</li>
+                                <li>Protein: 16.5 g</li>
+                                <li>Carbs: 72.7 g</li>
+                                <li>Dietary Fiber: 9 g</li>
+                                <li>Fat: 0.7 g</li>
+                                <li>Iron: 5.6 mg</li>
+                                <li>Vitamin C: 13 mg</li>
+                            </ul>
+                            <p class="product-price-back" style="color: #218118de;">Price: ₹150/200g</p>
                         </div>
                         <div class="product-back-action-container">
                            <a href="#" class="product-less-link" style="color: #218118de;">...less</a>
@@ -788,7 +889,7 @@
                     (A Pinnacle Group Company)
                 </div>
                 <div class="footer_contact_info_block">
-                    Naithika Foods <br>Plot No13, Jawahaer Colony <br>Chandanagar 500050
+                    Naithika Foods <br> Plot No13, Jawahaer Colony <br>Chandanagar, Hyderabad, <br> Telangana 500050
                 </div>
                 <div class="footer_contact_info_block">
                     <a href="mailto:naithikafoods@gmail.com">naithikafoods@gmail.com</a>
@@ -806,7 +907,7 @@
         </div>
     </footer>
 
-    <script src="static/naithika.js"></script>
+    <script src="static/naithika.js?v=1781078901.8143616"></script>
 
 
 
@@ -913,7 +1014,6 @@
 
 function addToCart(name, price, image) {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
     let existingProduct = cart.find(item => item.name === name);
 
     if (existingProduct) {
@@ -928,7 +1028,77 @@ function addToCart(name, price, image) {
     }
 
     localStorage.setItem("cart", JSON.stringify(cart));
-    alert(`${name} has been added to your cart.`);
+    showToast(`${name} has been added to your cart`);
+    if (typeof updateCartBadge === "function") updateCartBadge();
+}
+
+function showToast(message) {
+    let toast = document.createElement("div");
+    
+    // Create the HTML structure for the toast
+    toast.innerHTML = `
+        <div style="display: flex; align-items: center; width: 100%;">
+            <div style="margin-right: 16px; color: #2e7d32; display: flex; align-items: center; justify-content: center;">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                </svg>
+            </div>
+            <div style="flex-grow: 1; color: #333333; font-size: 16px; font-weight: 500; font-family: 'Inter', sans-serif;">
+                ${message}
+            </div>
+            <div class="toast-close" style="margin-left: 16px; cursor: pointer; color: #9aa0a6; font-size: 20px; font-weight: bold; line-height: 1;">
+                &times;
+            </div>
+        </div>
+    `;
+
+    Object.assign(toast.style, {
+        position: "fixed",
+        top: "44px", right: "24px", transform: "translateY(-20px)",
+        backgroundColor: "#ffffff",
+        padding: "20px 24px",
+        borderRadius: "8px",
+        boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
+        zIndex: "10000",
+        opacity: "0",
+        transition: "opacity 0.3s ease, transform 0.3s ease",
+        borderLeft: "6px solid #2e7d32",
+        background: "linear-gradient(to right, #e8f5e9 0%, #ffffff 15%)",
+        minWidth: "400px",
+        maxWidth: "90%",
+        display: "flex",
+        alignItems: "center"
+    });
+
+    document.body.appendChild(toast);
+
+    // Setup close button functionality
+    const closeBtn = toast.querySelector('.toast-close');
+    let hideTimeout;
+    
+    const hideToast = () => {
+        toast.style.opacity = "0";
+        toast.style.transform = "translateY(-20px)";
+        setTimeout(() => {
+            if (document.body.contains(toast)) {
+                document.body.removeChild(toast);
+            }
+        }, 300);
+    };
+
+    closeBtn.onclick = () => {
+        clearTimeout(hideTimeout);
+        hideToast();
+    };
+
+    // Animate in
+    requestAnimationFrame(() => {
+        toast.style.opacity = "1";
+        toast.style.transform = "translateY(0)";
+    });
+
+    // Auto dismiss after 3 seconds
+    hideTimeout = setTimeout(hideToast, 3000);
 }
 </script>
 

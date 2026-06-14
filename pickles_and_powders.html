@@ -1,9 +1,10 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Products - Pickles & Powders</title>
+    <title>Homemade Pickles & Spice Powders | Authentic Taste | Naithika Foods</title>
+    <meta name="description" content="Taste the authentic, traditional flavor of homemade pickles and spice powders from Naithika Foods. Prepared without preservatives or chemicals.">
     <link rel="icon" type="image/webp" href="images_naithika/logo.webp">
     
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@100..900&display=swap" rel="stylesheet">
@@ -15,7 +16,7 @@
 </head>
 <style>
     /* ===============================
-   NAITHIKA – WHATSAPP FLOAT BUTTON
+   NAITHIKA â€“ WHATSAPP FLOAT BUTTON
    =============================== */
 
 .naithika-whatsapp-float {
@@ -71,7 +72,7 @@
 
 <body class="product-page-body">
 
-    <header id="header_top_bar">
+        <header id="header_top_bar">
         <div class="header_container">
             
             <div name="header_promo_message" class="header_promo_message">
@@ -84,8 +85,8 @@
                     CONTACT US
                 </a>
                 <a href="#" class="header_faq_link">+91 8106025114</a>
-                <a href="offer.html">SPECIAL OFFERS</a>
-                <span class="header_divider">|</span>
+                <!--<a href="offer.html">SPECIAL OFFERS</a>-->
+                <!--<span class="header_divider">|</span>-->
             </div>
         </div>
     </header>
@@ -119,13 +120,17 @@
                     <a href="dehydrated_fruits.html" class="dropdown-item">Fruit Leather</a>
                     <a href="dehydrated_vegetables.html" class="dropdown-item">Dehydrated Vegetables</a>
                     <a href="pickles_and_powders.html" class="dropdown-item">Pickles & Powders</a>
-                    <a href="herbal_tea.html" class="dropdown-item">Herbal Teas</a>
+                    <!--<a href="herbal_tea.html" class="dropdown-item">Herbal Teas</a>-->
                 </div>
             </div>
 
-            <a href="offer.html" class="nav-link">OFFERS</a>
+            <!--<a href="offer.html" class="nav-link">OFFERS</a>-->
             <a href="contact.html" class="nav-link">CONTACT US</a>
-            <a href="cart.html" class="nav-link">CART</a>
+            <a href="#" onclick="openAccount(); return false;" class="nav-link auth-nav-link" style="font-weight:bold; color:#e97b06;">LOGIN</a>
+            <a href="cart.html" class="nav-link"><span style="position: relative; display: inline-flex; align-items: center; margin-left: 5px;">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+    <span class="cart-badge" style="display:none; position: absolute; top: -8px; right: -10px; background: #e97b06; color: #fff; border-radius: 50%; min-width: 18px; height: 18px; align-items: center; justify-content: center; font-size: 11px; font-weight: bold; line-height: 1; padding: 2px;">0</span>
+</span></a>
         </nav>
 
         <!-- MOBILE MENU BUTTON -->
@@ -143,7 +148,7 @@
     <div class="header_nav_list">
         <a href="index.html" class="nav-link">HOME</a>
         <a href="about.html" class="nav-link">ABOUT US</a>
-        <a href="offer.html" class="nav-link">OFFERS</a>
+        <!--<a href="offer.html" class="nav-link">OFFERS</a>-->
 
         <!-- MOBILE PRODUCTS CATEGORY HEADING -->
         <span class="mobile_category_heading">PRODUCTS</span>
@@ -151,10 +156,14 @@
         <a href="dehydrated_fruits.html" class="mobile-sub-item">Fruit Leather</a>
         <a href="dehydrated_vegetables.html" class="mobile-sub-item">Dehydrated Vegetables</a>
         <a href="pickles_and_powders.html" class="mobile-sub-item">Pickles & Powders</a>
-        <a href="herbal_tea.html" class="mobile-sub-item">Herbal Teas</a>
+        <!--<a href="herbal_tea.html" class="mobile-sub-item">Herbal Teas</a>-->
 
         <a href="contact.html" class="nav-link">CONTACT US</a>
-        <a href="cart.html" class="nav-link">CART</a>
+        <a href="#" onclick="openAccount(); return false;" class="nav-link auth-nav-link" style="font-weight:bold; color:#e97b06;">LOGIN</a>
+            <a href="cart.html" class="nav-link"><span style="position: relative; display: inline-flex; align-items: center; margin-left: 5px;">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+    <span class="cart-badge" style="display:none; position: absolute; top: -8px; right: -10px; background: #e97b06; color: #fff; border-radius: 50%; min-width: 18px; height: 18px; align-items: center; justify-content: center; font-size: 11px; font-weight: bold; line-height: 1; padding: 2px;">0</span>
+</span></a>
     </div>
 </div>
 
@@ -162,16 +171,13 @@
         <h2 id="product-pickles-powders" class="product-section-heading" style="color: #df2727;">Pickles & Powders</h2>
         <div class="product-grid">
 
-            <div class="product-card">
+                                                <div class="product-card">
                 <div class="product-card-inner">
                     <div class="product-card-front">
                         <div class="product-image-container">
                             <img src="images_naithika/products/mango pickle.webp" alt="Mango Pickle" onerror="this.onerror=null; this.src='https://placehold.co/400x200/a65e5e/ffffff?text=Mango+Pickle'">
                         </div>
 
-                        <div style="position: absolute; top: 10px; left: 10px; background-color: #555555; color: #ffffff; padding: 4px 12px; border-radius: 4px; font-weight: bold; font-size: 13px; z-index: 2; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
-                                Coming Soon
-                            </div>
                         <div class="product-content">
                             <h3 class="product-title">Mango Pickle</h3>
                             <div class="product-short-description-container">
@@ -179,13 +185,12 @@
                                 <a href="#" class="product-more-link" style="color: #df2727;">...more</a>
                                 <a href="#" class="product-less-link-mob" style="color: #df2727;">...less</a>
                             </div>
-                            <p class="product-price"  style="color: #df2727;">₹180/- (200g)</p>
+                            <p class="product-price"  style="color: #df2727;">₹250/-  (300g)</p>
                         </div>
                         <div class="product-buy-button-container">
                             <button class="product-buy-button product-front-buy-button"
-                            disabled
-                            onclick="addToCart('Mango Pickle', 180, 'images_naithika/products/mango pickle.webp')"
-                           style="background-color: #cccccc; color: #777777; cursor: not-allowed; opacity: 0.8; border: none;">
+                            onclick="addToCart('Mango Pickle', 250, 'images_naithika/products/mango pickle.webp')"
+                           style="background-color: #e97b06;">
                             Add To Cart
                             </button>
                         </div>
@@ -201,7 +206,7 @@
                                 <li>Carbs: 18 g</li>
                                 <li>Sodium: 560 mg</li>
                             </ul>
-                            <p class="product-price-back" style="color: #df2727;">Price: ₹180/- (200g)</p>
+                            <p class="product-price-back" style="color: #df2727;">Price: â‚¹250/- (300g)</p>
                         </div>
                         <div class="product-back-action-container">
                            <a href="#" class="product-less-link" style="color: #df2727;">...less</a>
@@ -210,11 +215,14 @@
                 </div>
             </div>
 
-            <div class="product-card">
+                                                <div class="product-card">
                 <div class="product-card-inner">
                     <div class="product-card-front">
                         <div class="product-image-container">
                             <img src="images_naithika/products/Indian gooseberry.webp" alt="Amla Pickle" onerror="this.onerror=null; this.src='https://placehold.co/400x200/a65e5e/ffffff?text=Amla+Pickle'">
+                        </div>
+                        <div style="position: absolute; top: 10px; left: 10px; background-color: #555555; color: #ffffff; padding: 4px 12px; border-radius: 4px; font-weight: bold; font-size: 13px; z-index: 2; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                            Coming Soon
                         </div>
                         <div class="product-content">
                             <h3 class="product-title">Amla Pickle</h3>
@@ -223,12 +231,13 @@
                                 <a href="#" class="product-more-link" style="color: #df2727;">...more</a>
                                 <a href="#" class="product-less-link-mob" style="color: #df2727;">...less</a>
                             </div>
-                            <p class="product-price" style="color: #df2727;">₹180/- (200g)</p>
+                            <p class="product-price" style="color: #df2727;">₹250/-  (300g)</p>
                         </div>
                         <div class="product-buy-button-container">
                             <button class="product-buy-button product-front-buy-button"
-                            onclick="addToCart('Amla Pickle', 180, 'images_naithika/products/Indian gooseberry.webp')"
-                            style="background-color: #e97b06;">
+                            disabled
+                            onclick="addToCart('Amla Pickle', 250, 'images_naithika/products/Indian gooseberry.webp')"
+                            style="background-color: #cccccc; color: #777777; cursor: not-allowed; opacity: 0.8; border: none;">
                             Add To Cart
                             </button>
                         </div>
@@ -244,7 +253,7 @@
                                 <li>Carbs: 20 g</li>
                                 <li>Sodium: 550 mg</li>
                             </ul>
-                            <p class="product-price-back" style="color: #df2727;">Price: ₹180/- (200g)</p>
+                            <p class="product-price-back" style="color: #df2727;">Price: â‚¹250/- (300g)</p>
                         </div>
                         <div class="product-back-action-container">
                            <a href="#" class="product-less-link" style="color: #df2727;">...less</a>
@@ -253,7 +262,7 @@
                 </div>
             </div>
 
-            <div class="product-card">
+                                                <div class="product-card">
                 <div class="product-card-inner">
                     <div class="product-card-front">
                         <div class="product-image-container">
@@ -266,11 +275,11 @@
                                 <a href="#" class="product-more-link" style="color: #df2727;">...more</a>
                                 <a href="#" class="product-less-link-mob" style="color: #df2727;">...less</a>
                             </div>
-                            <p class="product-price" style="color: #df2727;">₹180/- (200g)</p>
+                            <p class="product-price" style="color: #df2727;">₹250/-  (300g)</p>
                         </div>
                         <div class="product-buy-button-container">
                             <button class="product-buy-button product-front-buy-button"
-                            onclick="addToCart('Tomato Pickle', 180, 'images_naithika/products/Tomato Pickle.webp')"
+                            onclick="addToCart('Tomato Pickle', 250, 'images_naithika/products/Tomato Pickle.webp')"
                             style="background-color: #e97b06;">
                             Add To Cart
                             </button>
@@ -287,7 +296,7 @@
                                 <li>Carbs: 22 g</li>
                                 <li>Sodium: 480 mg</li>
                             </ul>
-                            <p class="product-price-back" style="color: #df2727;">Price: ₹180/- (200g)</p>
+                            <p class="product-price-back" style="color: #df2727;">Price: â‚¹250/- (300g)</p>
                         </div>
                         <div class="product-back-action-container">
                            <a href="#" class="product-less-link" style="color: #df2727;">...less</a>
@@ -296,7 +305,7 @@
                 </div>
             </div>
 
-            <div class="product-card">
+                                                <div class="product-card">
                 <div class="product-card-inner">
                     <div class="product-card-front">
                         <div class="product-image-container">
@@ -309,11 +318,11 @@
                                 <a href="#" class="product-more-link" style="color: #df2727;">...more</a>
                                 <a href="#" class="product-less-link-mob" style="color: #df2727;">...less</a>
                             </div>
-                            <p class="product-price" style="color: #df2727;">₹180/- (200g)</p>
+                            <p class="product-price" style="color: #df2727;">₹250/-  (300g)</p>
                         </div>
                         <div class="product-buy-button-container">
                             <button class="product-buy-button product-front-buy-button"
-                            onclick="addToCart('Red Chilli Pickle', 180, 'images_naithika/products/Red Chilli Pickle.webp')"
+                            onclick="addToCart('Red Chilli Pickle', 250, 'images_naithika/products/Red Chilli Pickle.webp')"
                             style="background-color: #e97b06;">
                             Add To Cart
                             </button>
@@ -330,7 +339,7 @@
                                 <li>Carbs: 20 g</li>
                                 <li>Sodium: 600 mg</li>
                             </ul>
-                            <p class="product-price-back" style="color: #df2727;">Price: ₹180/- (200g)</p>
+                            <p class="product-price-back" style="color: #df2727;">Price: â‚¹250/- (300g)</p>
                         </div>
                         <div class="product-back-action-container">
                            <a href="#" class="product-less-link" style="color: #df2727;">...less</a>
@@ -339,7 +348,7 @@
                 </div>
             </div>
 
-            <div class="product-card">
+                                                <div class="product-card">
                 <div class="product-card-inner">
                     <div class="product-card-front">
                         <div class="product-image-container">
@@ -352,11 +361,11 @@
                                 <a href="#" class="product-more-link" style="color: #df2727;">...more</a>
                                 <a href="#" class="product-less-link-mob" style="color: #df2727;">...less</a>
                             </div>
-                            <p class="product-price" style="color: #df2727;">₹180/- (200g)</p>
+                            <p class="product-price" style="color: #df2727;">₹250/-  (300g)</p>
                         </div>
                         <div class="product-buy-button-container">
                             <button class="product-buy-button product-front-buy-button"
-                            onclick="addToCart('Ginger Pickle', 180, 'images_naithika/products/Ginger pickle.webp')"
+                            onclick="addToCart('Ginger Pickle', 250, 'images_naithika/products/Ginger pickle.webp')"
                             style="background-color: #e97b06;">
                             Add To Cart
                             </button>
@@ -373,7 +382,7 @@
                                 <li>Carbs: 22 g</li>
                                 <li>Sodium: 550 mg</li>
                             </ul>
-                            <p class="product-price-back" style="color: #df2727;">Price: ₹180/- (200g)</p>
+                            <p class="product-price-back" style="color: #df2727;">Price: â‚¹250/- (300g)</p>
                         </div>
                         <div class="product-back-action-container">
                            <a href="#" class="product-less-link" style="color: #df2727;">...less</a>
@@ -382,7 +391,7 @@
                 </div>
             </div>
 
-            <div class="product-card">
+                                                <div class="product-card">
                 <div class="product-card-inner">
                     <div class="product-card-front">
                         <div class="product-image-container">
@@ -395,11 +404,11 @@
                                 <a href="#" class="product-more-link" style="color: #df2727;">...more</a>
                                 <a href="#" class="product-less-link-mob" style="color: #df2727;">...less</a>
                             </div>
-                            <p class="product-price" style="color: #df2727;">₹180 (200g)</p>
+                            <p class="product-price" style="color: #df2727;">₹250/-  (300g)</p>
                         </div>
                         <div class="product-buy-button-container">
                             <button class="product-buy-button product-front-buy-button"
-                            onclick="addToCart('Lemon Pickle', 180, 'images_naithika/products/Lemon Pickle.webp')"
+                            onclick="addToCart('Lemon Pickle', 250, 'images_naithika/products/Lemon Pickle.webp')"
                             style="background-color: #e97b06;">
                             Add To Cart
                             </button>
@@ -416,7 +425,7 @@
                                 <li>Carbs: 22 g</li>
                                 <li>Sodium: 550 mg</li>
                             </ul>
-                            <p class="product-price-back" style="color: #df2727;">Price: ₹180 (200g)</p>
+                            <p class="product-price-back" style="color: #df2727;">Price: â‚¹250/- (300g)</p>
                         </div>
                         <div class="product-back-action-container">
                            <a href="#" class="product-less-link" style="color: #df2727;">...less</a>
@@ -425,118 +434,33 @@
                 </div>
             </div>
 
-            <div class="product-card">
-                <div class="product-card-inner">
-                    <div class="product-card-front">
-                        <div class="product-image-container">
-                            <img src="images_naithika/products/Tomato Powder.webp" alt="Tomato Powder" onerror="this.onerror=null; this.src='https://placehold.co/400x200/a65e5e/ffffff?text=Tomato+Powder'">
-                        </div>
-                        <div class="product-content">
-                            <h3 class="product-title">Tomato Powder</h3>
-                            <div class="product-short-description-container">
-                                <span class="product-short-description-text"></span>
-                                <a href="#" class="product-more-link">...more</a>
-                                <a href="#" class="product-less-link-mob">...less</a>
-                            </div>
-                            <p class="product-price" style="color: #df2727;">₹200/100g</p>
-                        </div>
-                        <div class="product-buy-button-container">
-                            <button class="product-buy-button product-front-buy-button"
-                            onclick="addToCart('Tomato Powder', 200, 'images_naithika/products/Tomato Powder.webp')"
-                            style="background-color: #e97b06;">
-                            Add To Cart
-                            </button>
-                        </div>
-                    </div>
-                    <div class="product-card-back">
-                        <div class="product-full-content">
-                            <h4>Full Details: Tomato Powder</h4>
-                            <p>Slow-dried, ripe tomatoes ground into a bright, tangy powder. Perfect for seasoning, soups, and instant mixes - offering natural umami. A pantry essential year-round.</p>
-                            <h5 class="product-nutrition-heading">Nutritional Value (Per 100g)</h5>
-                            <ul class="product-nutrition-list">
-                                <li>Energy: 300 kcal</li>
-                                <li>Carbohydrates: 75 g</li>
-                                <li>Protein: 13 g</li>
-                                <li>Fat: 0.4 g</li>
-                                <li>Fiber: 17 g</li>
-                                <li>Vitamin A & C, Potassium: High</li>
-                            </ul>
-                            <p class="product-price-back">Price: ₹200/100g</p>
-                        </div>
-                        <div class="product-back-action-container">
-                           <a href="#" class="product-less-link">...less</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
 
-            <div class="product-card">
-                <div class="product-card-inner">
-                    <div class="product-card-front">
-                        <div class="product-image-container">
-                            <img src="realimages/garlic.jpeg" alt="Garlic Powder" onerror="this.onerror=null; this.src='https://placehold.co/400x200/a65e5e/ffffff?text=Garlic+Powder'">
-                        </div>
-                        <div class="product-content">
-                            <h3 class="product-title">Garlic Powder</h3>
-                            <div class="product-short-description-container">
-                                <span class="product-short-description-text"></span>
-                                <a href="#" class="product-more-link">...more</a>
-                                <a href="#" class="product-less-link-mob">...less</a>
-                            </div>
-                            <p class="product-price" style="color: #df2727;">₹150/- (200g)</p>
-                        </div>
-                        <div class="product-buy-button-container">
-                            <button class="product-buy-button product-front-buy-button"
-                            onclick="addToCart('Garlic Powder', 150, 'realimages/garlic.jpeg')"
-                            style="background-color: #e97b06;">
-                            Add To Cart
-                            </button>
-                        </div>
-                    </div>
-                    <div class="product-card-back">
-                        <div class="product-full-content">
-                            <h4>Full Details: Garlic Powder</h4>
-                            <p>Pure powder made from fresh, aromatic garlic cloves. Sun-cured and gently dehydrated to retain aroma and savoury depth. Perfect for seasoning, marinades, and spice mixes.</p>
-                            <h5 class="product-nutrition-heading">Nutritional Value (Per 100g)</h5>
-                            <ul class="product-nutrition-list">
-                                <li>Energy: 331 kcal</li>
-                                <li>Protein: 16.5 g</li>
-                                <li>Carbs: 72.7 g</li>
-                                <li>Dietary Fiber: 9 g</li>
-                                <li>Fat: 0.7 g</li>
-                                <li>Iron: 5.6 mg</li>
-                                <li>Vitamin C: 13 mg</li>
-                            </ul>
-                            <p class="product-price-back">Price: ₹150/- (200g)</p>
-                        </div>
-                        <div class="product-back-action-container">
-                           <a href="#" class="product-less-link">...less</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="product-card">
+                                                <div class="product-card">
                 <div class="product-card-inner">
                     <div class="product-card-front">
                         <div class="product-image-container">
                             <img src="images_naithika/products/Moringa Podi.webp" alt="Moringa Podi" onerror="this.onerror=null; this.src='https://placehold.co/400x200/a65e5e/ffffff?text=Moringa+Podi'">
                         </div>
+                        <div style="position: absolute; top: 10px; left: 10px; background-color: #555555; color: #ffffff; padding: 4px 12px; border-radius: 4px; font-weight: bold; font-size: 13px; z-index: 2; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                            Coming Soon
+                        </div>
                         <div class="product-content">
                             <h3 class="product-title">Moringa Podi</h3>
                             <div class="product-short-description-container">
                                 <span class="product-short-description-text"></span>
-                                <a href="#" class="product-more-link" style="color: #df2727;" >...more</a>
+                                <a href="#" class="product-more-link" style="color: #df2727;">...more</a>
                                 <a href="#" class="product-less-link-mob" style="color: #df2727;">...less</a>
                             </div>
-                            <p class="product-price" style="color: #df2727;">₹150/- (200g)</p>
+                            <p class="product-price" style="color: #df2727;">₹150/-  (200g)</p>
                         </div>
-                        <div class="product-buy-button-container"><button class="product-buy-button product-front-buy-button"
+                        <div class="product-buy-button-container">
+                            <button class="product-buy-button product-front-buy-button"
+                            disabled
                             onclick="addToCart('Moringa Podi', 150, 'images_naithika/products/Moringa Podi.webp')"
-                            style="background-color: #e97b06;">
+                            style="background-color: #cccccc; color: #777777; cursor: not-allowed; opacity: 0.8; border: none;">
                             Add To Cart
                             </button>
-
                         </div>
                     </div>
                     <div class="product-card-back">
@@ -550,7 +474,7 @@
                                 <li>Iron: High</li>
                                 <li>Calcium: High</li>
                             </ul>
-                            <p class="product-price-back" style="color: #df2727;">Price: ₹150/- (200g)</p>
+                            <p class="product-price-back" style="color: #df2727;">Price: â‚¹150/- (200g)</p>
                         </div>
                         <div class="product-back-action-container">
                            <a href="#" class="product-less-link" style="color: #df2727;">...less</a>
@@ -559,7 +483,7 @@
                 </div>
             </div>
 
-            <div class="product-card">
+                                                <div class="product-card">
                 <div class="product-card-inner">
                     <div class="product-card-front">
                         <div class="product-image-container">
@@ -572,7 +496,7 @@
                                 <a href="#" class="product-more-link" style="color: #df2727;">...more</a>
                                 <a href="#" class="product-less-link-mob" style="color: #df2727;">...less</a>
                             </div>
-                            <p class="product-price" style="color: #df2727;">₹150/- (200g)</p>
+                            <p class="product-price" style="color: #df2727;">₹150/-  (200g)</p>
                         </div>
                         <div class="product-buy-button-container">
                             <button class="product-buy-button product-front-buy-button"
@@ -592,7 +516,7 @@
                                 <li>Protein: 10 g</li>
                                 <li>Calcium: High</li>
                             </ul>
-                            <p class="product-price-back" style="color: #df2727;">Price: ₹150/- (200g)</p>
+                            <p class="product-price-back" style="color: #df2727;">Price: â‚¹150/- (200g)</p>
                         </div>
                         <div class="product-back-action-container">
                            <a href="#" class="product-less-link" style="color: #df2727;">...less</a>
@@ -601,7 +525,7 @@
                 </div>
             </div>
 
-            <div class="product-card">
+                                                <div class="product-card">
                 <div class="product-card-inner">
                     <div class="product-card-front">
                         <div class="product-image-container">
@@ -614,7 +538,7 @@
                                 <a href="#" class="product-more-link" style="color: #df2727;">...more</a>
                                 <a href="#" class="product-less-link-mob" style="color: #df2727;">...less</a>
                             </div>
-                            <p class="product-price" style="color: #df2727;">₹120/- (200g)</p>
+                            <p class="product-price" style="color: #df2727;">₹120/-  (200g)</p>
                         </div>
                         <div class="product-buy-button-container">
                             <button class="product-buy-button product-front-buy-button"
@@ -634,7 +558,7 @@
                                 <li>Fiber: 10 g</li>
                                 <li>Iron: 12 mg</li>
                             </ul>
-                            <p class="product-price-back" style="color: #df2727;">Price: ₹120/- (200g)</p>
+                            <p class="product-price-back" style="color: #df2727;">Price: â‚¹120/- (200g)</p>
                         </div>
                         <div class="product-back-action-container">
                            <a href="#" class="product-less-link" style="color: #df2727;">...less</a>
@@ -643,11 +567,14 @@
                 </div>
             </div>
 
-            <div class="product-card">
+                                                <div class="product-card">
                 <div class="product-card-inner">
                     <div class="product-card-front">
                         <div class="product-image-container">
                             <img src="realimages/idli_podi.jpeg" alt="Idli Podi" onerror="this.onerror=null; this.src='https://placehold.co/400x200/a65e5e/ffffff?text=Idli+Podi'">
+                        </div>
+                        <div style="position: absolute; top: 10px; left: 10px; background-color: #555555; color: #ffffff; padding: 4px 12px; border-radius: 4px; font-weight: bold; font-size: 13px; z-index: 2; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                            Coming Soon
                         </div>
                         <div class="product-content">
                             <h3 class="product-title">Idli Podi (Milagai Podi)</h3>
@@ -656,12 +583,13 @@
                                 <a href="#" class="product-more-link" style="color: #df2727;">...more</a>
                                 <a href="#" class="product-less-link-mob" style="color: #df2727;">...less</a>
                             </div>
-                            <p class="product-price" style="color: #df2727;">₹120/- (200g)</p>
+                            <p class="product-price" style="color: #df2727;">₹120/-  (200g)</p>
                         </div>
                         <div class="product-buy-button-container">
                             <button class="product-buy-button product-front-buy-button"
+                            disabled
                             onclick="addToCart('Idli Podi (Milagai Podi)', 120, 'realimages/idli_podi.jpeg')"
-                            style="background-color: #e97b06;">
+                            style="background-color: #cccccc; color: #777777; cursor: not-allowed; opacity: 0.8; border: none;">
                             Add To Cart
                             </button>
                         </div>
@@ -676,7 +604,7 @@
                                 <li>Protein: 15 g</li>
                                 <li>Fiber: 12 g</li>
                             </ul>
-                            <p class="product-price-back" style="color: #df2727;">Price: ₹120/- (200g)</p>
+                            <p class="product-price-back" style="color: #df2727;">Price: â‚¹120/- (200g)</p>
                         </div>
                         <div class="product-back-action-container">
                            <a href="#" class="product-less-link" style="color: #df2727;">...less</a>
@@ -787,7 +715,7 @@
                     (A Pinnacle Group Company)
                 </div>
                 <div class="footer_contact_info_block">
-                    Naithika Foods <br>Plot No13, Jawahaer Colony <br>Chandanagar 500050
+                    Naithika Foods <br> Plot No13, Jawahaer Colony <br>Chandanagar, Hyderabad, <br> Telangana 500050
                 </div>
                 <div class="footer_contact_info_block">
                     <a href="mailto:naithikafoods@gmail.com">naithikafoods@gmail.com</a>
@@ -805,7 +733,7 @@
         </div>
     </footer>
 
-    <script src="static/naithika.js"></script>
+    <script src="static/naithika.js?v=1781078901.8300674"></script>
 
 
 
@@ -862,7 +790,7 @@
             }
 
             if (lessLinkMob) {
-                lessLinkMob.style.display = 'none'; // 🔑 FIX: hide on load
+                lessLinkMob.style.display = 'none'; // ðŸ”‘ FIX: hide on load
             }
 
             /* ---------- MORE ---------- */
@@ -872,12 +800,12 @@
                     e.stopPropagation();
 
                     if (isMobileView()) {
-                        // MOBILE → expand text inline
+                        // MOBILE â†’ expand text inline
                         shortTextEl.textContent = fullText;
                         moreLink.style.display = 'none';
                         if (lessLinkMob) lessLinkMob.style.display = 'inline';
                     } else {
-                        // DESKTOP → flip card
+                        // DESKTOP â†’ flip card
                         innerCard.classList.add('is-flipped');
                     }
                 });
@@ -912,7 +840,6 @@
 
 function addToCart(name, price, image) {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
     let existingProduct = cart.find(item => item.name === name);
 
     if (existingProduct) {
@@ -927,7 +854,77 @@ function addToCart(name, price, image) {
     }
 
     localStorage.setItem("cart", JSON.stringify(cart));
-    alert(`${name} has been added to your cart.`);
+    showToast(`${name} has been added to your cart`);
+    if (typeof updateCartBadge === "function") updateCartBadge();
+}
+
+function showToast(message) {
+    let toast = document.createElement("div");
+    
+    // Create the HTML structure for the toast
+    toast.innerHTML = `
+        <div style="display: flex; align-items: center; width: 100%;">
+            <div style="margin-right: 16px; color: #2e7d32; display: flex; align-items: center; justify-content: center;">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                </svg>
+            </div>
+            <div style="flex-grow: 1; color: #333333; font-size: 16px; font-weight: 500; font-family: 'Inter', sans-serif;">
+                ${message}
+            </div>
+            <div class="toast-close" style="margin-left: 16px; cursor: pointer; color: #9aa0a6; font-size: 20px; font-weight: bold; line-height: 1;">
+                &times;
+            </div>
+        </div>
+    `;
+
+    Object.assign(toast.style, {
+        position: "fixed",
+        top: "44px", right: "24px", transform: "translateY(-20px)",
+        backgroundColor: "#ffffff",
+        padding: "20px 24px",
+        borderRadius: "8px",
+        boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
+        zIndex: "10000",
+        opacity: "0",
+        transition: "opacity 0.3s ease, transform 0.3s ease",
+        borderLeft: "6px solid #2e7d32",
+        background: "linear-gradient(to right, #e8f5e9 0%, #ffffff 15%)",
+        minWidth: "400px",
+        maxWidth: "90%",
+        display: "flex",
+        alignItems: "center"
+    });
+
+    document.body.appendChild(toast);
+
+    // Setup close button functionality
+    const closeBtn = toast.querySelector('.toast-close');
+    let hideTimeout;
+    
+    const hideToast = () => {
+        toast.style.opacity = "0";
+        toast.style.transform = "translateY(-20px)";
+        setTimeout(() => {
+            if (document.body.contains(toast)) {
+                document.body.removeChild(toast);
+            }
+        }, 300);
+    };
+
+    closeBtn.onclick = () => {
+        clearTimeout(hideTimeout);
+        hideToast();
+    };
+
+    // Animate in
+    requestAnimationFrame(() => {
+        toast.style.opacity = "1";
+        toast.style.transform = "translateY(0)";
+    });
+
+    // Auto dismiss after 3 seconds
+    hideTimeout = setTimeout(hideToast, 3000);
 }
 </script>
 

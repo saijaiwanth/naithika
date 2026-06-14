@@ -19,14 +19,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mail->isSMTP();
         $mail->Host       = 'smtp.gmail.com';
         $mail->SMTPAuth   = true;
-        $mail->Username   = 'etournament49@gmail.com'; // your Gmail address
-        $mail->Password   = 'ojdxciltszkoapwu';  // Gmail App Password
+        $mail->Username   = 'naithikafoods@gmail.com'; // your Gmail address
+        $mail->Password   = 'rlehmfsogwgvenaz';  // Gmail App Password
         $mail->SMTPSecure = 'ssl';
         $mail->Port       = 465;
 
         // Sender & recipient
-        $mail->setFrom('etournament49@gmail.com', 'Kayalcove Website');
-        $mail->addAddress('etournament49@gmail.com'); 
+        $mail->setFrom('naithikafoods@gmail.com', 'Naithika Foods');
+        $mail->addAddress('naithikafoods@gmail.com'); 
         if (!empty($email)) {
             $mail->addReplyTo($email, $name);
         }
@@ -47,15 +47,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Redirect with success message
         echo "<script>
-                alert('Details submitted successfully.');
+                sessionStorage.setItem('toastMsg', 'Details submitted successfully.');
                 window.location.href = 'contact.html';
               </script>";
     } catch (Exception $e) {
         // Redirect with failure message
         echo "<script>
-                alert('Error sending email. Please try again later.');
+                sessionStorage.setItem('toastMsgError', 'Error sending email. Please try again later.');
                 window.location.href = 'contact.html';
               </script>";
     }
 }
 ?>
+

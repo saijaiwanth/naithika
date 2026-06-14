@@ -129,26 +129,26 @@
 </style>
 <body>
 
-<header id="header_top_bar">
-    <div class="header_container">
-        
-        <div name="header_promo_message" class="header_promo_message">
-            WORLDWIDE SHIPPING AVAILABLE | FREE SHIPPING WITHIN INDIA ON ORDERS ABOVE RS. 999
-        </div>
+    <header id="header_top_bar">
+        <div class="header_container">
+            
+            <div name="header_promo_message" class="header_promo_message">
+                WORLDWIDE SHIPPING AVAILABLE | FREE SHIPPING WITHIN INDIA ON ORDERS ABOVE RS. 999
+            </div>
 
-        <div name="header_secondary_links" class="header_secondary_links">
-            <a href="contact.html">
-                <svg class="header_contact_icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                CONTACT US
-            </a>
-            <a href="#" class="header_faq_link">+91 8106025114</a>
-            <a href="offer.html">SPECIAL OFFERS</a>
-            <span class="header_divider">|</span>
+            <div name="header_secondary_links" class="header_secondary_links">
+                <a href="contact.html">
+                    <svg class="header_contact_icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                    CONTACT US
+                </a>
+                <a href="#" class="header_faq_link">+91 8106025114</a>
+                <!--<a href="offer.html">SPECIAL OFFERS</a>-->
+                <!--<span class="header_divider">|</span>-->
+            </div>
         </div>
-    </div>
-</header>
+    </header>
 
-<div id="header_main_content">
+    <div id="header_main_content">
     <div class="header_container">
 
         <a href="/">
@@ -177,13 +177,17 @@
                     <a href="dehydrated_fruits.html" class="dropdown-item">Fruit Leather</a>
                     <a href="dehydrated_vegetables.html" class="dropdown-item">Dehydrated Vegetables</a>
                     <a href="pickles_and_powders.html" class="dropdown-item">Pickles & Powders</a>
-                    <a href="herbal_tea.html" class="dropdown-item">Herbal Teas</a>
+                    <!--<a href="herbal_tea.html" class="dropdown-item">Herbal Teas</a>-->
                 </div>
             </div>
 
-            <a href="offer.html" class="nav-link">OFFERS</a>
+            <!--<a href="offer.html" class="nav-link">OFFERS</a>-->
             <a href="contact.html" class="nav-link">CONTACT US</a>
-            <a href="cart.html" class="nav-link">CART</a>
+            <a href="#" onclick="openAccount(); return false;" class="nav-link auth-nav-link" style="font-weight:bold; color:#e97b06;">LOGIN</a>
+            <a href="cart.html" class="nav-link"><span style="position: relative; display: inline-flex; align-items: center; margin-left: 5px;">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+    <span class="cart-badge" style="display:none; position: absolute; top: -8px; right: -10px; background: #e97b06; color: #fff; border-radius: 50%; min-width: 18px; height: 18px; align-items: center; justify-content: center; font-size: 11px; font-weight: bold; line-height: 1; padding: 2px;">0</span>
+</span></a>
         </nav>
 
         <!-- MOBILE MENU BUTTON -->
@@ -201,7 +205,7 @@
     <div class="header_nav_list">
         <a href="index.html" class="nav-link">HOME</a>
         <a href="about.html" class="nav-link">ABOUT US</a>
-        <a href="offer.html" class="nav-link">OFFERS</a>
+        <!--<a href="offer.html" class="nav-link">OFFERS</a>-->
 
         <!-- MOBILE PRODUCTS CATEGORY HEADING -->
         <span class="mobile_category_heading">PRODUCTS</span>
@@ -209,10 +213,14 @@
         <a href="dehydrated_fruits.html" class="mobile-sub-item">Fruit Leather</a>
         <a href="dehydrated_vegetables.html" class="mobile-sub-item">Dehydrated Vegetables</a>
         <a href="pickles_and_powders.html" class="mobile-sub-item">Pickles & Powders</a>
-        <a href="herbal_tea.html" class="mobile-sub-item">Herbal Teas</a>
+        <!--<a href="herbal_tea.html" class="mobile-sub-item">Herbal Teas</a>-->
 
         <a href="contact.html" class="nav-link">CONTACT US</a>
-        <a href="cart.html" class="nav-link">CART</a>
+        <a href="#" onclick="openAccount(); return false;" class="nav-link auth-nav-link" style="font-weight:bold; color:#e97b06;">LOGIN</a>
+            <a href="cart.html" class="nav-link"><span style="position: relative; display: inline-flex; align-items: center; margin-left: 5px;">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+    <span class="cart-badge" style="display:none; position: absolute; top: -8px; right: -10px; background: #e97b06; color: #fff; border-radius: 50%; min-width: 18px; height: 18px; align-items: center; justify-content: center; font-size: 11px; font-weight: bold; line-height: 1; padding: 2px;">0</span>
+</span></a>
     </div>
 </div>
 
@@ -232,10 +240,10 @@
         <p>Pickles & Powders</p>
     </div>
 
-    <a href="herbal_tea.html" class="circle">
+<!--     <a href="herbal_tea.html" class="circle">
         <img src="images_naithika/herbal_teas.webp" alt="All Products" />
         <p>Herbal Teas</p>
-    </a>
+    </a> -->
 </section>
 
 
@@ -341,8 +349,8 @@
                 </p>
                 <span class="read-more-text" onclick="toggleReadMore(this)">View More</span>
                
-                <div class="price">₹280 /100g</div>
-                <center><button class="product-buy-button product-front-buy-button" onclick="addToCart('Jamun', 280, 'images_naithika/products/jamun1.jpg')">Add To Cart</button></center><br>
+                <div class="price">₹300 /80g</div>
+                <center><button class="product-buy-button product-front-buy-button" onclick="addToCart('Jamun', 300, 'images_naithika/products/jamun1.jpg')">Add To Cart</button></center><br>
             </div> -->
     
             <div class="product-card">
@@ -917,7 +925,6 @@ setInterval(() => {
     
 function addToCart(name, price, image) {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
     let existingProduct = cart.find(item => item.name === name);
 
     if (existingProduct) {
@@ -932,7 +939,72 @@ function addToCart(name, price, image) {
     }
 
     localStorage.setItem("cart", JSON.stringify(cart));
-    alert(`${name} has been added to your cart.`);
+    showToast(`${name} has been added to your cart`);
+    if (typeof updateCartBadge === "function") updateCartBadge();
+}
+
+function showToast(message) {
+    let toast = document.createElement("div");
+    toast.innerHTML = `
+        <div style="display: flex; align-items: center; width: 100%;">
+            <div style="margin-right: 16px; color: #2e7d32; display: flex; align-items: center; justify-content: center;">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                </svg>
+            </div>
+            <div style="flex-grow: 1; color: #333333; font-size: 16px; font-weight: 500; font-family: 'Inter', sans-serif;">
+                ${message}
+            </div>
+            <div class="toast-close" style="margin-left: 16px; cursor: pointer; color: #9aa0a6; font-size: 20px; font-weight: bold; line-height: 1;">
+                &times;
+            </div>
+        </div>
+    `;
+
+    Object.assign(toast.style, {
+        position: "fixed",
+        top: "44px", right: "24px", transform: "translateY(-20px)",
+        backgroundColor: "#ffffff",
+        padding: "20px 24px",
+        borderRadius: "8px",
+        boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
+        zIndex: "10000",
+        opacity: "0",
+        transition: "opacity 0.3s ease, transform 0.3s ease",
+        borderLeft: "6px solid #2e7d32",
+        background: "linear-gradient(to right, #e8f5e9 0%, #ffffff 15%)",
+        minWidth: "400px",
+        maxWidth: "90%",
+        display: "flex",
+        alignItems: "center"
+    });
+
+    document.body.appendChild(toast);
+
+    const closeBtn = toast.querySelector('.toast-close');
+    let hideTimeout;
+    
+    const hideToast = () => {
+        toast.style.opacity = "0";
+        toast.style.transform = "translateY(-20px)";
+        setTimeout(() => {
+            if (document.body.contains(toast)) {
+                document.body.removeChild(toast);
+            }
+        }, 300);
+    };
+
+    closeBtn.onclick = () => {
+        clearTimeout(hideTimeout);
+        hideToast();
+    };
+
+    requestAnimationFrame(() => {
+        toast.style.opacity = "1";
+        toast.style.transform = "translateY(0)";
+    });
+
+    hideTimeout = setTimeout(hideToast, 3000);
 }
 </script>
 

@@ -256,7 +256,7 @@ body {
 <body>
 
     <!-- Header -->
-     <header id="header_top_bar">
+         <header id="header_top_bar">
         <div class="header_container">
             
             <div name="header_promo_message" class="header_promo_message">
@@ -269,13 +269,13 @@ body {
                     CONTACT US
                 </a>
                 <a href="#" class="header_faq_link">+91 8106025114</a>
-                <a href="offer.html">SPECIAL OFFERS</a>
-                <span class="header_divider">|</span>
+                <!--<a href="offer.html">SPECIAL OFFERS</a>-->
+                <!--<span class="header_divider">|</span>-->
             </div>
         </div>
     </header>
 
-      <div id="header_main_content">
+    <div id="header_main_content">
     <div class="header_container">
 
         <a href="/">
@@ -304,13 +304,17 @@ body {
                     <a href="dehydrated_fruits.html" class="dropdown-item">Fruit Leather</a>
                     <a href="dehydrated_vegetables.html" class="dropdown-item">Dehydrated Vegetables</a>
                     <a href="pickles_and_powders.html" class="dropdown-item">Pickles & Powders</a>
-                    <a href="herbal_tea.html" class="dropdown-item">Herbal Teas</a>
+                    <!--<a href="herbal_tea.html" class="dropdown-item">Herbal Teas</a>-->
                 </div>
             </div>
 
-            <a href="offer.html" class="nav-link">OFFERS</a>
+            <!--<a href="offer.html" class="nav-link">OFFERS</a>-->
             <a href="contact.html" class="nav-link">CONTACT US</a>
-            <a href="cart.html" class="nav-link">CART</a>
+            <a href="#" onclick="openAccount(); return false;" class="nav-link auth-nav-link" style="font-weight:bold; color:#e97b06;">LOGIN</a>
+            <a href="cart.html" class="nav-link"><span style="position: relative; display: inline-flex; align-items: center; margin-left: 5px;">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+    <span class="cart-badge" style="display:none; position: absolute; top: -8px; right: -10px; background: #e97b06; color: #fff; border-radius: 50%; min-width: 18px; height: 18px; align-items: center; justify-content: center; font-size: 11px; font-weight: bold; line-height: 1; padding: 2px;">0</span>
+</span></a>
         </nav>
 
         <!-- MOBILE MENU BUTTON -->
@@ -328,7 +332,7 @@ body {
     <div class="header_nav_list">
         <a href="index.html" class="nav-link">HOME</a>
         <a href="about.html" class="nav-link">ABOUT US</a>
-        <a href="offer.html" class="nav-link">OFFERS</a>
+        <!--<a href="offer.html" class="nav-link">OFFERS</a>-->
 
         <!-- MOBILE PRODUCTS CATEGORY HEADING -->
         <span class="mobile_category_heading">PRODUCTS</span>
@@ -336,10 +340,14 @@ body {
         <a href="dehydrated_fruits.html" class="mobile-sub-item">Fruit Leather</a>
         <a href="dehydrated_vegetables.html" class="mobile-sub-item">Dehydrated Vegetables</a>
         <a href="pickles_and_powders.html" class="mobile-sub-item">Pickles & Powders</a>
-        <a href="herbal_tea.html" class="mobile-sub-item">Herbal Teas</a>
+        <!--<a href="herbal_tea.html" class="mobile-sub-item">Herbal Teas</a>-->
 
         <a href="contact.html" class="nav-link">CONTACT US</a>
-        <a href="cart.html" class="nav-link">CART</a>
+        <a href="#" onclick="openAccount(); return false;" class="nav-link auth-nav-link" style="font-weight:bold; color:#e97b06;">LOGIN</a>
+            <a href="cart.html" class="nav-link"><span style="position: relative; display: inline-flex; align-items: center; margin-left: 5px;">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+    <span class="cart-badge" style="display:none; position: absolute; top: -8px; right: -10px; background: #e97b06; color: #fff; border-radius: 50%; min-width: 18px; height: 18px; align-items: center; justify-content: center; font-size: 11px; font-weight: bold; line-height: 1; padding: 2px;">0</span>
+</span></a>
     </div>
 </div>
 
@@ -384,6 +392,7 @@ function saveCart(cart) {
 }
 
 function renderCart() {
+    if (typeof updateCartBadge === "function") updateCartBadge();
     const container = document.getElementById("cart-container");
     const footer = document.getElementById("cart-footer-ui");
     const cartContent = document.getElementById("cart-content");
@@ -438,7 +447,7 @@ function renderCart() {
     footer.innerHTML = `
         <div class="grand-total">Total: ₹${grandTotal.toFixed(2)}</div>
         <button class="btn clear-btn" onclick="clearCart()">Clear Cart</button>
-        <button class="btn checkout-btn" onclick="checkoutWhatsApp()">
+        <button class="btn checkout-btn" onclick="processCheckout()">
             Checkout via WhatsApp
         </button>
     `;
@@ -456,29 +465,229 @@ function updateQty(index, change) {
 }
 
 function removeItem(index) {
-    let cart = getCart();
-    cart.splice(index, 1);
-    saveCart(cart);
-    renderCart();
+    showConfirmModal("Remove Item", "Are you sure you want to remove this item from your cart?", () => {
+        let cart = getCart();
+        cart.splice(index, 1);
+        saveCart(cart);
+        renderCart();
+        showToast("Item removed from cart");
+    });
 }
 
 function clearCart() {
-    if (confirm("Are you sure you want to remove all items from your cart?")) {
+    showConfirmModal("Clear Cart", "Are you sure you want to remove all items from your cart? This action cannot be undone.", () => {
         localStorage.removeItem("cart");
         renderCart();
+        showToast("Cart has been cleared");
+    });
+}
+
+function showConfirmModal(title, message, onConfirm) {
+    let backdrop = document.createElement("div");
+    Object.assign(backdrop.style, {
+        position: "fixed", top: "0", left: "0", width: "100%", height: "100%",
+        backgroundColor: "rgba(0, 0, 0, 0.5)", zIndex: "9999",
+        display: "flex", alignItems: "center", justifyContent: "center",
+        opacity: "0", transition: "opacity 0.3s ease"
+    });
+
+    let modal = document.createElement("div");
+    Object.assign(modal.style, {
+        backgroundColor: "#ffffff",
+        borderRadius: "12px",
+        boxShadow: "0 10px 25px rgba(0,0,0,0.2)",
+        fontFamily: "'Inter', sans-serif",
+        transform: "scale(0.9)",
+        transition: "transform 0.3s ease",
+        maxWidth: "90%", width: "450px",
+        display: "flex", flexDirection: "column"
+    });
+
+    // Header
+    let header = document.createElement("div");
+    Object.assign(header.style, {
+        display: "flex", alignItems: "center", padding: "20px 24px",
+        borderBottom: "1px solid #e2e8f0"
+    });
+
+    // Warning icon
+    let iconWrap = document.createElement("div");
+    Object.assign(iconWrap.style, { marginRight: "12px", display: "flex", alignItems: "center" });
+    iconWrap.innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24" fill="#dc2626"><path d="M12 2L1 21h22L12 2zm1 16h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>`;
+
+    // Title
+    let titleEl = document.createElement("h3");
+    titleEl.textContent = title;
+    Object.assign(titleEl.style, {
+        margin: "0", fontSize: "18px", color: "#1e293b", fontWeight: "700", flexGrow: "1"
+    });
+
+    // Close X
+    let closeIcon = document.createElement("div");
+    closeIcon.innerHTML = "&times;";
+    Object.assign(closeIcon.style, {
+        fontSize: "24px", color: "#94a3b8", cursor: "pointer", lineHeight: "1", fontWeight: "bold"
+    });
+
+    header.appendChild(iconWrap);
+    header.appendChild(titleEl);
+    header.appendChild(closeIcon);
+
+    // Body
+    let bodyEl = document.createElement("div");
+    Object.assign(bodyEl.style, { padding: "24px" });
+    let msgEl = document.createElement("p");
+    msgEl.textContent = message;
+    Object.assign(msgEl.style, {
+        margin: "0", fontSize: "15px", color: "#64748b", lineHeight: "1.6"
+    });
+    bodyEl.appendChild(msgEl);
+
+    // Footer
+    let footer = document.createElement("div");
+    Object.assign(footer.style, {
+        display: "flex", justifyContent: "flex-end", gap: "12px", padding: "16px 24px",
+        borderTop: "1px solid #e2e8f0", backgroundColor: "#f8fafc",
+        borderBottomLeftRadius: "12px", borderBottomRightRadius: "12px"
+    });
+
+    let cancelBtn = document.createElement("button");
+    cancelBtn.textContent = "Cancel";
+    Object.assign(cancelBtn.style, {
+        padding: "10px 20px", backgroundColor: "#e2e8f0", color: "#334155",
+        border: "none", borderRadius: "6px", fontSize: "14px", fontWeight: "600",
+        cursor: "pointer", transition: "background-color 0.2s"
+    });
+    cancelBtn.onmouseover = () => cancelBtn.style.backgroundColor = "#cbd5e1";
+    cancelBtn.onmouseout = () => cancelBtn.style.backgroundColor = "#e2e8f0";
+
+    let confirmBtn = document.createElement("button");
+    confirmBtn.textContent = "Clear";
+    Object.assign(confirmBtn.style, {
+        padding: "10px 20px", backgroundColor: "#dc2626", color: "#ffffff",
+        border: "none", borderRadius: "6px", fontSize: "14px", fontWeight: "600",
+        cursor: "pointer", transition: "background-color 0.2s"
+    });
+    confirmBtn.onmouseover = () => confirmBtn.style.backgroundColor = "#b91c1c";
+    confirmBtn.onmouseout = () => confirmBtn.style.backgroundColor = "#dc2626";
+
+    footer.appendChild(cancelBtn);
+    footer.appendChild(confirmBtn);
+
+    modal.appendChild(header);
+    modal.appendChild(bodyEl);
+    modal.appendChild(footer);
+    backdrop.appendChild(modal);
+    document.body.appendChild(backdrop);
+
+    requestAnimationFrame(() => {
+        backdrop.style.opacity = "1";
+        modal.style.transform = "scale(1)";
+    });
+
+    function closeModal() {
+        backdrop.style.opacity = "0";
+        modal.style.transform = "scale(0.9)";
+        setTimeout(() => { if (document.body.contains(backdrop)) document.body.removeChild(backdrop); }, 300);
     }
+
+    closeIcon.onclick = closeModal;
+    cancelBtn.onclick = closeModal;
+    confirmBtn.onclick = () => { closeModal(); if (onConfirm) onConfirm(); };
+}
+
+function showToast(message) {
+    let toast = document.createElement("div");
+    
+    toast.innerHTML = `
+        <div style="display: flex; align-items: center; width: 100%;">
+            <div style="margin-right: 16px; color: #2e7d32; display: flex; align-items: center; justify-content: center;">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                </svg>
+            </div>
+            <div style="flex-grow: 1; color: #333333; font-size: 16px; font-weight: 500; font-family: 'Inter', sans-serif;">
+                ${message}
+            </div>
+            <div class="toast-close" style="margin-left: 16px; cursor: pointer; color: #9aa0a6; font-size: 20px; font-weight: bold; line-height: 1;">
+                &times;
+            </div>
+        </div>
+    `;
+
+    Object.assign(toast.style, {
+        position: "fixed",
+        top: "44px",
+        right: "24px",
+        transform: "translateY(-20px)",
+        backgroundColor: "#ffffff",
+        padding: "20px 24px",
+        borderRadius: "8px",
+        boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
+        zIndex: "10000",
+        opacity: "0",
+        transition: "opacity 0.3s ease, transform 0.3s ease",
+        borderLeft: "6px solid #2e7d32",
+        background: "linear-gradient(to right, #e8f5e9 0%, #ffffff 15%)",
+        minWidth: "400px",
+        maxWidth: "90%",
+        display: "flex",
+        alignItems: "center"
+    });
+
+    document.body.appendChild(toast);
+
+    const closeBtn = toast.querySelector('.toast-close');
+    let hideTimeout;
+    
+    const hideToast = () => {
+        toast.style.opacity = "0";
+        toast.style.transform = "translateY(-20px)";
+        setTimeout(() => {
+            if (document.body.contains(toast)) {
+                document.body.removeChild(toast);
+            }
+        }, 300);
+    };
+
+    closeBtn.onclick = () => {
+        clearTimeout(hideTimeout);
+        hideToast();
+    };
+
+    requestAnimationFrame(() => {
+        toast.style.opacity = "1";
+        toast.style.transform = "translateY(0)";
+    });
+
+    hideTimeout = setTimeout(hideToast, 3000);
 }
 
 /**
  * WhatsApp Integration
  */
-function checkoutWhatsApp() {
+
+
+function processCheckout() {
+    let currentUser = JSON.parse(sessionStorage.getItem('naithika_user') || 'null');
+    if (!currentUser) {
+        document.getElementById('authModalOverlay').style.display = 'flex';
+    } else {
+        checkoutWhatsApp(currentUser);
+    }
+}
+
+function checkoutWhatsApp(user) {
+    if (!user) user = JSON.parse(sessionStorage.getItem('naithika_user') || '{}');
     const phoneNumber = "918125121347"; 
     let cart = getCart();
 
     if (cart.length === 0) return;
 
     let message = "*New Order Request*\n------------------\n";
+    if (user.name) {
+        message += `*Customer Details:*\nName: ${user.name}\nContact: ${user.contact_number}\nEmail: ${user.email}\n*Shipping Address:*\n${user.address}\n------------------\n`;
+    }
     let grandTotal = 0;
 
     cart.forEach((item, index) => {
@@ -492,10 +701,10 @@ function checkoutWhatsApp() {
 
     message += `------------------\n`;
     message += `*Grand Total: ₹${grandTotal.toFixed(2)}*\n\n`;
-    message += "Please confirm availability and shipping details.";
+    message += "Please confirm availability.";
 
     const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-    window.open(whatsappURL, "_blank");
+    window.location.href = whatsappURL;
 }
 
 // Initial Run
@@ -580,7 +789,7 @@ renderCart();
                     (A Pinnacle Group Company)
                 </div>
                 <div class="footer_contact_info_block">
-                    Naithika Foods <br>Plot No13, Jawahaer Colony <br>Chandanagar 500050
+                    Naithika Foods <br> Plot No13, Jawahaer Colony <br>Chandanagar, Hyderabad, <br> Telangana 500050
                 </div>
                 <div class="footer_contact_info_block">
                     <a href="mailto:naithikafoods@gmail.com">naithikafoods@gmail.com</a>
@@ -598,6 +807,10 @@ renderCart();
         </div>
     </footer>
 
-    <script src="static/naithika.js"></script>
-    </body>
+    <script src="static/naithika.js?v=1781078901.800875"></script>
+    
+
+
+        </body>
+
 </html>

@@ -1,118 +1,89 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Returns and Refunds</title>
-    <!-- Favicon link -->
-    <link rel="icon" type="image/webp" href="images_naithika/logo.webp">
-    
+    <title>My Profile - Naithika</title>
+    <link rel="stylesheet" href="index.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="static/naithika_style.css">
-    <link rel="stylesheet" href="static/naithika_about.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
-<style>
-
-        /* ===== POLICY PAGE LAYOUT ===== */
-        .policy-page-wrapper {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 60px 20px;
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+    <script src="static/naithika.js"></script>
+    <style>
+        .profile-container {
+            max-width: 600px;
+            margin: 100px auto 50px;
+            padding: 30px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
-
-        .policy-page-wrapper h1 {
+        .profile-heading {
             text-align: center;
-            margin-bottom: 10px;
-        }
-
-        .policy-subtitle {
-            text-align: center;
-            color: #777;
-            margin-bottom: 40px;
-        }
-
-        .policy-page-wrapper h3 {
-            margin-top: 30px;
-            margin-bottom: 12px;
-            color: #4f381f;
-        }
-
-        .policy-page-wrapper p,
-        .policy-page-wrapper li {
-            line-height: 1.8;
-            margin-bottom: 12px;
             color: #333;
+            margin-bottom: 30px;
         }
-
-        .policy-page-wrapper ul {
-            padding-left: 20px;
+        .form-group {
             margin-bottom: 20px;
         }
-
-     
-    /* ===============================
-   NAITHIKA – WHATSAPP FLOAT BUTTON
-   =============================== */
-
-.naithika-whatsapp-float {
-    position: fixed;
-    right: 20px;
-    bottom: 60px;
-
-    width: 56px;
-    height: 56px;
-
-    background-color: #25D366;
-    border-radius: 50%;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
-    z-index: 9999;
-
-    text-decoration: none;
-}
-
-.naithika-whatsapp-float svg {
-    width: 26px;
-    height: 26px;
-    fill: #ffffff;
-}
-
-/* Hover (desktop only) */
-@media (hover: hover) {
-    .naithika-whatsapp-float:hover {
-        transform: scale(1.06);
-        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
-    }
-}
-
-/* Mobile optimization */
-@media (max-width: 600px) {
-    .naithika-whatsapp-float {
-        width: 50px;
-        height: 50px;
-        right: 16px;
-        bottom: 25px;
-    }
-
-    .naithika-whatsapp-float svg {
-        width: 24px;
-        height: 24px;
-    }
-}
-
-</style>
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-family: 'Inter', sans-serif;
+            box-sizing: border-box;
+        }
+        .form-group input[readonly] {
+            background-color: #f5f5f5;
+            cursor: not-allowed;
+        }
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        .btn-update {
+            flex: 1;
+            padding: 12px;
+            background: #e97b06;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .btn-update:hover {
+            background: #c76704;
+        }
+        .btn-logout {
+            flex: 1;
+            padding: 12px;
+            background: #df2727;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .btn-logout:hover {
+            background: #b51c1c;
+        }
+    </style>
 </head>
 <body>
 
-    <!-- Header -->
-         <header id="header_top_bar">
+        <header id="header_top_bar">
         <div class="header_container">
             
             <div name="header_promo_message" class="header_promo_message">
@@ -207,116 +178,112 @@
     </div>
 </div>
 
-<!-- ================= RETURN & REFUND CONTENT ================= -->
-<div class="policy-page-wrapper">
+    <div class="profile-container">
+        <h2 class="profile-heading">My Account</h2>
+        
+        <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" id="profName" placeholder="Enter your full name">
+        </div>
+        
+        <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" id="profEmail" placeholder="Enter your email" onblur="validateEmailRealTime(this)">
+        </div>
+        
+        <div class="form-group">
+            <label>Contact Number</label>
+            <input type="tel" id="profContact" placeholder="Enter your contact number" oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="10">
+        </div>
+        
+        <div class="form-group">
+            <label>Shipping Address</label>
+            <textarea id="profAddress" rows="4" placeholder="Enter your full shipping address"></textarea>
+        </div>
+        
+        <div class="btn-group">
+            <button class="btn-update" onclick="updateProfile()">Save Changes</button>
+            <button class="btn-logout" onclick="logout()">Logout</button>
+        </div>
+    </div>
 
-    <h1 class="ancestral_wisdom_title">Return & Refund Policy Naithika Foods</h1>
-    <p class="policy-subtitle"></p>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            let user = JSON.parse(sessionStorage.getItem('naithika_user'));
+            if (!user) {
+                window.location.href = "index.html"; // redirect if not logged in
+                return;
+            }
+            
+            document.getElementById('profName').value = user.name || '';
+            document.getElementById('profEmail').value = user.email || '';
+            document.getElementById('profContact').value = user.contact_number || '';
+            document.getElementById('profAddress').value = user.address || '';
+        });
 
-    <p>
-        At Naithika Foods, customer satisfaction and product quality are our
-        top priorities. Due to the nature of food products, returns and refunds
-        are handled with strict hygiene and safety considerations.
-    </p>
+        function updateProfile() {
+            let user = JSON.parse(sessionStorage.getItem('naithika_user'));
+            let name = document.getElementById('profName').value;
+            let email = document.getElementById('profEmail').value;
+            let contact = document.getElementById('profContact').value;
+            let address = document.getElementById('profAddress').value;
+            
+            if(!name || !email || !contact || !address) {
+                naithikaAlert("Please fill in all fields.", true);
+                return;
+            }
+            
+            let contactRegex = /^[0-9]{10}$/;
+            if (!contactRegex.test(contact)) {
+                naithikaAlert("Please enter a valid 10-digit mobile number.", true);
+                return;
+            }
+            
+            let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                naithikaAlert("Please enter a valid email address.", true);
+                return;
+            }
+            
+            let payload = {
+                action: 'update_profile',
+                id: user.id,
+                name: name,
+                email: email,
+                contact_number: contact,
+                address: address
+            };
+            
+            fetch('auth.php', { 
+                method: 'POST', 
+                headers: {'Content-Type': 'application/json'}, 
+                body: JSON.stringify(payload) 
+            })
+            .then(r => r.json())
+            .then(data => {
+                if(data.status === 'success') {
+                    sessionStorage.setItem('naithika_user', JSON.stringify(data.user));
+                    if (data.status === "success") { naithikaAlert(data.message); } else { naithikaAlert(data.message, true); }
+                } else {
+                    if (data.status === "success") { naithikaAlert(data.message); } else { naithikaAlert(data.message, true); }
+                }
+            })
+            .catch(e => alert("Error updating profile."));
+        }
 
-    <h3>Returns & Replacements</h3>
-    <p>
-        We do not accept returns on food products once delivered, as they are
-        perishable and consumable in nature.
-    </p>
+        function logout() {
+            sessionStorage.removeItem('naithika_user');
+            window.location.href = "index.html";
+        }
+    </script>
 
-    <p>Replacements may be considered only in the following cases:</p>
-    <ul>
-        <li>Product received is damaged, leaking, or tampered</li>
-        <li>Incorrect product delivered</li>
-        <li>Missing item in the order</li>
-    </ul>
-
-    <p>
-        To be eligible for a replacement, the issue must be reported within
-        <strong>24 hours of delivery</strong> along with clear photos or videos
-        of the product and outer packaging.
-    </p>
-
-    <h3>Refunds</h3>
-    <p>
-        Refunds are applicable only if a replacement is not possible or is
-        not approved by Naithika Foods.
-    </p>
-
-    <p>
-        Once approved, refunds will be processed to the original mode of
-        payment within <strong>5–7 business days</strong>.
-    </p>
-
-    <p>
-        Shipping charges, if any, are non-refundable unless the issue
-        is due to an error from our side.
-    </p>
-
-    <h3>Non-Eligible Cases</h3>
-    <p>Refunds or replacements will not be provided for:</p>
-    <ul>
-        <li>Minor differences in taste, texture, or color due to natural ingredients</li>
-        <li>Incorrect delivery address or customer unavailability</li>
-        <li>Damage caused after delivery</li>
-        <li>Orders placed incorrectly by the customer</li>
-    </ul>
-
-    <h3>Order Cancellation</h3>
-    <p>
-        Orders can be cancelled only before dispatch. Once an order has been
-        shipped, cancellation requests will not be accepted.
-    </p>
-
-    <h3>Contact Us</h3>
-    <p>
-        For any return, replacement, or refund-related queries, please contact us:
-    </p>
-
-    <p>
-        <strong>Email:</strong> support@naithikafoods.com<br>
-        <strong>Phone / WhatsApp:</strong> +91 81251 21347<br>
-        <strong>Business Hours:</strong> Mon–Sat, 10:00 AM – 6:00 PM
-    </p>
-
-    <p>
-        Naithika Foods reserves the right to update or modify this policy
-        at any time without prior notice.
-    </p>
-
-</div>
-
-<!-- Naithika WhatsApp Floating Button -->
-<a
-  href="https://wa.me/918125121347"
-  class="naithika-whatsapp-float"
-  target="_blank"
-  rel="noopener"
-  aria-label="Chat with Naithika Foods on WhatsApp"
->
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 32 32"
-    width="26"
-    height="26"
-    aria-hidden="true"
-  >
-    <path
-      fill="#FFFFFF"
-      d="M16 0C7.2 0 0 7.2 0 16c0 2.8.7 5.4 2 7.8L0 32l8.4-2.2C10.7 31.2 13.3 32 16 32c8.8 0 16-7.2 16-16S24.8 0 16 0zm0 29.3c-2.4 0-4.6-.6-6.6-1.8l-.5-.3-5 1.3 1.3-4.9-.3-.5c-1.2-2-1.9-4.3-1.9-6.8C3 8.6 8.6 3 16 3s13 5.6 13 13-5.6 13.3-13 13.3zm7.5-9.9c-.4-.2-2.4-1.2-2.8-1.3-.4-.2-.7-.2-1 .2-.3.4-1.2 1.3-1.5 1.6-.3.3-.6.3-1 .1-2.4-1.2-4-2.2-5.6-5-.4-.7.4-.7 1.1-2.3.1-.4.1-.7 0-.9-.1-.2-1-2.4-1.4-3.3-.4-.9-.8-.8-1-.8h-.9c-.3 0-.9.1-1.3.6-.4.4-1.7 1.7-1.7 4.2s1.8 4.9 2 5.2c.3.3 3.5 5.3 8.4 7.4 1.2.5 2.1.8 2.8 1 .9.3 1.8.3 2.5.2.8-.1 2.4-1 2.8-2 .4-1 .4-1.9.3-2-.1-.2-.4-.3-.8-.5z"
-    />
-  </svg>
-</a>
-
-<!-- ================= FOOTER ================= -->
 <footer id="footer">
         <div id="footer_content">
             
             <div class="footer_col footer_about">
                 <h3 class="footer_section_title">About Naithika</h3>
                 <p class="footer_about_text">
-                    Naithika Foods: Ethical dehydration from soil-nurtured farms. FSSAI certified, partnering with principled growers for pure, lasting nutrition.
+                    Naithika Foods: Ethical dehydration from soil-nurtured farms. FSSAI certified, partnering with principled growers.
                 </p>
                 
                 <img class="footer_fssai_img" 
@@ -378,10 +345,7 @@
                     </svg>
                   </a>
               </div>
-
             </div>
-
-            
 
             <div class="footer_col footer_contact">
                 <h3 class="footer_section_title">Visit Us</h3>
@@ -407,10 +371,5 @@
             Naithika Copyright &copy; 2026
         </div>
     </footer>
-
-
-<script src="static/naithika.js?v=1781078901.8379214"></script>
-
 </body>
 </html>
-

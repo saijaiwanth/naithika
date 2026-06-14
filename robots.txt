@@ -1,4 +1,11 @@
 User-agent: *
 Allow: /
+Disallow: /cart.html
+Disallow: /404.html
+Disallow: /naithika_headerandfooter.html
+Disallow: /.git/
+Disallow: /vendor/
+Disallow: /.vscode/
+Disallow: /.qodo/
 
 Sitemap: https://naithikafoods.com/sitemap.xml
