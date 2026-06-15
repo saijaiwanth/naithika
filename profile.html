@@ -42,10 +42,33 @@
             font-family: 'Inter', sans-serif;
             box-sizing: border-box;
         }
-        .form-group input[readonly] {
+        /* Read-only state */
+        .form-group input:disabled,
+        .form-group textarea:disabled {
             background-color: #f5f5f5;
-            cursor: not-allowed;
+            color: #444;
+            cursor: default;
+            border-color: #e0e0e0;
         }
+        /* Edit mode: fields active */
+        .form-group input:not(:disabled),
+        .form-group textarea:not(:disabled) {
+            background-color: #fff;
+            border-color: #e97b06;
+            cursor: text;
+        }
+        .btn-edit {
+            flex: 1;
+            padding: 12px;
+            background: #e97b06;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .btn-edit:hover { background: #c76704; }
         .btn-group {
             display: flex;
             gap: 15px;
@@ -183,92 +206,120 @@
         
         <div class="form-group">
             <label>Full Name</label>
-            <input type="text" id="profName" placeholder="Enter your full name">
+            <input type="text" id="profName" placeholder="Enter your full name" disabled>
         </div>
         
         <div class="form-group">
             <label>Email Address</label>
-            <input type="email" id="profEmail" placeholder="Enter your email" onblur="validateEmailRealTime(this)">
+            <input type="email" id="profEmail" placeholder="Enter your email" disabled>
         </div>
         
         <div class="form-group">
             <label>Contact Number</label>
-            <input type="tel" id="profContact" placeholder="Enter your contact number" oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="10">
+            <input type="tel" id="profContact" placeholder="Enter your contact number" maxlength="10" disabled>
         </div>
         
         <div class="form-group">
             <label>Shipping Address</label>
-            <textarea id="profAddress" rows="4" placeholder="Enter your full shipping address"></textarea>
+            <textarea id="profAddress" rows="4" placeholder="Enter your full shipping address" disabled></textarea>
         </div>
         
         <div class="btn-group">
-            <button class="btn-update" onclick="updateProfile()">Save Changes</button>
+            <button id="editSaveBtn" class="btn-edit" onclick="toggleEditMode()">Edit</button>
             <button class="btn-logout" onclick="logout()">Logout</button>
         </div>
     </div>
 
     <script>
+        let isEditing = false;
+        const editableFields = ['profName', 'profEmail', 'profContact', 'profAddress'];
+
         document.addEventListener('DOMContentLoaded', () => {
             let user = JSON.parse(sessionStorage.getItem('naithika_user'));
             if (!user) {
-                window.location.href = "index.html"; // redirect if not logged in
+                window.location.href = "index.html";
                 return;
             }
-            
             document.getElementById('profName').value = user.name || '';
             document.getElementById('profEmail').value = user.email || '';
             document.getElementById('profContact').value = user.contact_number || '';
             document.getElementById('profAddress').value = user.address || '';
         });
 
+        function toggleEditMode() {
+            if (!isEditing) {
+                // Enter edit mode
+                isEditing = true;
+                editableFields.forEach(id => {
+                    document.getElementById(id).disabled = false;
+                });
+                // Add numeric filter back for contact
+                document.getElementById('profContact').addEventListener('input', function() {
+                    this.value = this.value.replace(/[^0-9]/g, '');
+                });
+                const btn = document.getElementById('editSaveBtn');
+                btn.textContent = '\u2713 Save Changes';
+                btn.style.background = '#2e7d32';
+                btn.onmouseover = () => btn.style.background = '#1b5e20';
+                btn.onmouseout  = () => btn.style.background = '#2e7d32';
+                document.getElementById('profName').focus();
+            } else {
+                // Save mode
+                updateProfile();
+            }
+        }
+
         function updateProfile() {
             let user = JSON.parse(sessionStorage.getItem('naithika_user'));
-            let name = document.getElementById('profName').value;
-            let email = document.getElementById('profEmail').value;
-            let contact = document.getElementById('profContact').value;
-            let address = document.getElementById('profAddress').value;
-            
-            if(!name || !email || !contact || !address) {
+            let name    = document.getElementById('profName').value.trim();
+            let email   = document.getElementById('profEmail').value.trim();
+            let contact = document.getElementById('profContact').value.trim();
+            let address = document.getElementById('profAddress').value.trim();
+
+            if (!name || !email || !contact || !address) {
                 naithikaAlert("Please fill in all fields.", true);
                 return;
             }
-            
-            let contactRegex = /^[0-9]{10}$/;
-            if (!contactRegex.test(contact)) {
+            if (!/^[0-9]{10}$/.test(contact)) {
                 naithikaAlert("Please enter a valid 10-digit mobile number.", true);
                 return;
             }
-            
-            let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
                 naithikaAlert("Please enter a valid email address.", true);
                 return;
             }
-            
-            let payload = {
-                action: 'update_profile',
-                id: user.id,
-                name: name,
-                email: email,
-                contact_number: contact,
-                address: address
-            };
-            
-            fetch('auth.php', { 
-                method: 'POST', 
-                headers: {'Content-Type': 'application/json'}, 
-                body: JSON.stringify(payload) 
+
+            fetch('auth.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    action: 'update_profile',
+                    id: user.id,
+                    name, email,
+                    contact_number: contact,
+                    address
+                })
             })
             .then(r => r.json())
             .then(data => {
-                if(data.status === 'success') {
+                if (data.status === 'success') {
                     sessionStorage.setItem('naithika_user', JSON.stringify(data.user));
-                    if (data.status === "success") { naithikaAlert(data.message); } else { naithikaAlert(data.message, true); }
+                    naithikaAlert(data.message);
+                    // Return to read-only mode
+                    isEditing = false;
+                    editableFields.forEach(id => {
+                        document.getElementById(id).disabled = true;
+                    });
+                    const btn = document.getElementById('editSaveBtn');
+                    btn.innerHTML = 'Edit';
+                    btn.style.background = '#e97b06';
+                    btn.onmouseover = () => btn.style.background = '#c76704';
+                    btn.onmouseout  = () => btn.style.background = '#e97b06';
                 } else {
-                    if (data.status === "success") { naithikaAlert(data.message); } else { naithikaAlert(data.message, true); }
+                    naithikaAlert(data.message, true);
                 }
             })
-            .catch(e => alert("Error updating profile."));
+            .catch(() => naithikaAlert("Error updating profile.", true));
         }
 
         function logout() {
@@ -292,7 +343,7 @@
                 >
 
                 <div class="footer_fssai_details">
-                    GSTN: 23625032007897<br>
+                    GSTN: 36AAKCN9076E1Z2<br>
                     CIN: U56290TS2025PTC204748
                 </div>
 
