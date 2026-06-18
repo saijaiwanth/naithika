@@ -226,12 +226,13 @@ function updateQtyFromCard(name, change, price, image) {
     
     if (existingProduct) {
         existingProduct.quantity += change;
+        existingProduct.price = Number(existingProduct.price) || Number(price) || 0;
         if (existingProduct.quantity <= 0) {
             cart = cart.filter(item => item.name !== name);
             if (typeof showToast === "function") showToast(`${name} removed from cart`);
         }
     } else if (change > 0) {
-        cart.push({ name, price, image, quantity: 1 });
+        cart.push({ name, price: Number(price) || 0, image, quantity: 1 });
         if (typeof showToast === "function") showToast(`${name} has been added to your cart`);
     }
     
@@ -268,6 +269,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     <textarea id="regAddress" placeholder="Shipping Address" rows="3" style="width:100%; padding:10px; margin-bottom:10px; border:1px solid #ccc; border-radius:6px; box-sizing:border-box;"></textarea>
                     <input type="password" id="regPassword" placeholder="Password" onkeyup="checkPassword()" style="width:100%; padding:10px; margin-bottom:5px; border:1px solid #ccc; border-radius:6px; box-sizing:border-box;">
                     <div id="pwdError" style="color:red; font-size:12px; margin-bottom:10px; display:none;">Must be >6 chars, 1 uppercase, 1 lowercase, 1 number, 1 special char</div>
+                    <div style="margin-bottom:15px; display:flex; align-items:flex-start; gap:8px;">
+                        <input type="checkbox" id="regWhatsappJoined" style="margin-top:3px; cursor:pointer;">
+                        <label for="regWhatsappJoined" style="font-size:13px; color:#555; cursor:pointer; line-height:1.4;">
+                            I have joined the <a href="https://chat.whatsapp.com/J9Q4Fff9WC52H2z8P14D1i" target="_blank" style="color:#e97b06; text-decoration:underline; font-weight:bold;">WhatsApp Channel for Updates</a>
+                        </label>
+                    </div>
                     <button id="regBtn" onclick="submitRegister()" style="width:100%; padding:10px; background:#ccc; color:#fff; border:none; border-radius:6px; font-weight:bold; cursor:not-allowed;" disabled>Register</button>
                 </div>
             </div>
@@ -326,6 +333,7 @@ function submitRegister() {
     let email = document.getElementById('regEmail').value;
     let addr = document.getElementById('regAddress').value;
     let pwd = document.getElementById('regPassword').value;
+    let whatsapp_joined = document.getElementById('regWhatsappJoined').checked ? 1 : 0;
     if(!name || !contact || !email || !addr) { naithikaAlert("Please fill all fields", true); return; }
     
     let contactRegex = /^[0-9]{10}$/;
@@ -340,9 +348,16 @@ function submitRegister() {
         return;
     }
     
-    let payload = { action: 'register', name, contact_number: contact, email, address: addr, password: pwd };
     fetch('auth.php', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(payload) })
-    .then(r => r.json())
+    .then(r => r.text().then(text => {
+        try {
+            return JSON.parse(text);
+        } catch (err) {
+            console.error("Server response was not JSON:", text);
+            naithikaAlert("Server returned invalid response. Check console.", true);
+            throw new Error("Invalid JSON from server");
+        }
+    }))
     .then(data => {
         if (data.status === 'success') {
             naithikaAlert("Registration successful! Please login to continue.");
@@ -352,6 +367,7 @@ function submitRegister() {
             document.getElementById('regEmail').value = '';
             document.getElementById('regAddress').value = '';
             document.getElementById('regPassword').value = '';
+            document.getElementById('regWhatsappJoined').checked = false;
             // Switch to login tab automatically
             switchAuthTab('login');
         } else { naithikaAlert(data.message, true); }
@@ -370,8 +386,12 @@ function submitLogin() {
             sessionStorage.setItem('naithika_user', JSON.stringify(data.user));
             document.getElementById('authModalOverlay').style.display = 'none';
             updateAuthNavLinks();
-            if (typeof processCheckout === 'function') { processCheckout(); } // if in cart
-            else { window.location.href = "profile.html"; }
+            if (typeof renderCart === 'function') { 
+                renderCart(); 
+                naithikaAlert("Logged in successfully! Click 'Checkout via WhatsApp' to complete your order.");
+            } else { 
+                window.location.href = "profile.html"; 
+            }
         } else { if (data.status === "success") { naithikaAlert(data.message); } else { naithikaAlert(data.message, true); } }
     }).catch(e => { naithikaAlert("Login failed. Server might be down.", true); });
 }

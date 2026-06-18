@@ -57,6 +57,7 @@ class CustomHandler(http.server.SimpleHTTPRequestHandler):
                         address TEXT NOT NULL,
                         password VARCHAR(255) NOT NULL,
                         login_count INT DEFAULT 0,
+                        whatsapp_joined TINYINT(1) DEFAULT 0,
                         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                     )
                 """)
@@ -68,12 +69,19 @@ class CustomHandler(http.server.SimpleHTTPRequestHandler):
                 except:
                     pass
 
+                try:
+                    cursor.execute("ALTER TABLE users ADD COLUMN whatsapp_joined TINYINT(1) DEFAULT 0")
+                    conn.commit()
+                except:
+                    pass
+
                 if action == 'register':
                     name = data.get('name', '').strip()
                     contact = data.get('contact_number', '').strip()
                     email = data.get('email', '').strip()
                     address = data.get('address', '').strip()
                     password = data.get('password', '')
+                    whatsapp_joined = int(data.get('whatsapp_joined', 0))
 
                     cursor.execute("SELECT email, contact_number FROM users WHERE email = %s OR contact_number = %s", (email, contact))
                     row = cursor.fetchone()
@@ -84,12 +92,12 @@ class CustomHandler(http.server.SimpleHTTPRequestHandler):
                             response = {"status": "error", "message": "User already exists with this Contact Number."}
                     else:
                         hashed = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
-                        cursor.execute("INSERT INTO users (name, contact_number, email, address, password) VALUES (%s, %s, %s, %s, %s)", 
-                                       (name, contact, email, address, hashed.decode('utf-8')))
+                        cursor.execute("INSERT INTO users (name, contact_number, email, address, password, whatsapp_joined) VALUES (%s, %s, %s, %s, %s, %s)", 
+                                       (name, contact, email, address, hashed.decode('utf-8'), whatsapp_joined))
                         conn.commit()
                         user_id = cursor.lastrowid
                         user_data = {
-                            "id": user_id, "name": name, "contact_number": contact, "email": email, "address": address
+                            "id": user_id, "name": name, "contact_number": contact, "email": email, "address": address, "whatsapp_joined": whatsapp_joined
                         }
                         response = {"status": "success", "message": "Registration successful!", "user": user_data}
                 

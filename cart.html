@@ -384,7 +384,13 @@ body {
  * Core Cart Logic
  */
 function getCart() {
-    return JSON.parse(localStorage.getItem("cart")) || [];
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    return cart.map(item => {
+        if (item) {
+            item.price = Number(item.price) || 0;
+        }
+        return item;
+    });
 }
 
 function saveCart(cart) {
@@ -444,12 +450,47 @@ function renderCart() {
         `;
     });
 
+    let currentUser = JSON.parse(sessionStorage.getItem('naithika_user') || 'null');
+    let checkoutBtnHtml = '';
+    
+    if (currentUser) {
+        const phoneNumber = "918125121347";
+        let message = "*New Order Request*\n------------------\n";
+        if (currentUser.name) {
+            message += `*Customer Details:*\nName: ${currentUser.name || ''}\nContact: ${currentUser.contact_number || ''}\nEmail: ${currentUser.email || ''}\n*Shipping Address:*\n${currentUser.address || ''}\n------------------\n`;
+        }
+        
+        cart.forEach((item, index) => {
+            const itemTotal = item.price * item.quantity;
+            message += `*${index + 1}. ${item.name}*\n`;
+            message += `   Qty: ${item.quantity}\n`;
+            message += `   Price: ₹${item.price}\n`;
+            message += `   Subtotal: ₹${itemTotal}\n\n`;
+        });
+        
+        message += `------------------\n`;
+        message += `*Grand Total: ₹${grandTotal.toFixed(2)}*\n\n`;
+        message += "Please confirm availability.";
+        
+        const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+        
+        checkoutBtnHtml = `
+            <a class="btn checkout-btn" href="${whatsappURL}">
+                Checkout via WhatsApp
+            </a>
+        `;
+    } else {
+        checkoutBtnHtml = `
+            <button class="btn checkout-btn" onclick="processCheckout()">
+                Checkout via WhatsApp
+            </button>
+        `;
+    }
+
     footer.innerHTML = `
         <div class="grand-total">Total: ₹${grandTotal.toFixed(2)}</div>
         <button class="btn clear-btn" onclick="clearCart()">Clear Cart</button>
-        <button class="btn checkout-btn" onclick="processCheckout()">
-            Checkout via WhatsApp
-        </button>
+        ${checkoutBtnHtml}
     `;
 }
 
@@ -471,7 +512,7 @@ function removeItem(index) {
         saveCart(cart);
         renderCart();
         showToast("Item removed from cart");
-    });
+    }, "Remove");
 }
 
 function clearCart() {
@@ -479,10 +520,10 @@ function clearCart() {
         localStorage.removeItem("cart");
         renderCart();
         showToast("Cart has been cleared");
-    });
+    }, "Clear");
 }
 
-function showConfirmModal(title, message, onConfirm) {
+function showConfirmModal(title, message, onConfirm, confirmText = "Confirm") {
     let backdrop = document.createElement("div");
     Object.assign(backdrop.style, {
         position: "fixed", top: "0", left: "0", width: "100%", height: "100%",
@@ -562,7 +603,7 @@ function showConfirmModal(title, message, onConfirm) {
     cancelBtn.onmouseout = () => cancelBtn.style.backgroundColor = "#e2e8f0";
 
     let confirmBtn = document.createElement("button");
-    confirmBtn.textContent = "Clear";
+    confirmBtn.textContent = confirmText;
     Object.assign(confirmBtn.style, {
         padding: "10px 20px", backgroundColor: "#dc2626", color: "#ffffff",
         border: "none", borderRadius: "6px", fontSize: "14px", fontWeight: "600",
@@ -686,7 +727,7 @@ function checkoutWhatsApp(user) {
 
     let message = "*New Order Request*\n------------------\n";
     if (user.name) {
-        message += `*Customer Details:*\nName: ${user.name}\nContact: ${user.contact_number}\nEmail: ${user.email}\n*Shipping Address:*\n${user.address}\n------------------\n`;
+        message += `*Customer Details:*\nName: ${user.name || ''}\nContact: ${user.contact_number || ''}\nEmail: ${user.email || ''}\n*Shipping Address:*\n${user.address || ''}\n------------------\n`;
     }
     let grandTotal = 0;
 
@@ -704,7 +745,15 @@ function checkoutWhatsApp(user) {
     message += "Please confirm availability.";
 
     const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-    window.location.href = whatsappURL;
+    
+    try {
+        const newWindow = window.open(whatsappURL, '_blank');
+        if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
+            window.location.href = whatsappURL;
+        }
+    } catch (e) {
+        window.location.href = whatsappURL;
+    }
 }
 
 // Initial Run
@@ -807,7 +856,7 @@ renderCart();
         </div>
     </footer>
 
-    <script src="static/naithika.js?v=1781078901.800875"></script>
+    <script src="static/naithika.js?v=2.0.1"></script>
     
 
 

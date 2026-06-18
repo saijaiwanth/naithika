@@ -17,20 +17,17 @@ if (file_exists($envPath)) {
 
 // Fallback to default local credentials if .env variables are missing
 $host = isset($_ENV['DB_HOST']) ? $_ENV['DB_HOST'] : 'localhost';
-$user = isset($_ENV['DB_USER']) ? $_ENV['DB_USER'] : 'u123456789_root'; // Hostinger default format example
-$pass = isset($_ENV['DB_PASS']) ? $_ENV['DB_PASS'] : '';
-$dbname = isset($_ENV['DB_NAME']) ? $_ENV['DB_NAME'] : 'u123456789_naithika'; // Hostinger default format example
+$user = isset($_ENV['DB_USER']) ? $_ENV['DB_USER'] : 'u457412820_user1';
+$pass = isset($_ENV['DB_PASS']) ? $_ENV['DB_PASS'] : 'Naithika@5566';
+$dbname = isset($_ENV['DB_NAME']) ? $_ENV['DB_NAME'] : 'u457412820_Naithika_Web';
 
-// Create connection
-$conn = new mysqli($host, $user, $pass);
-if ($conn->connect_error) {
-    echo json_encode(["status" => "error", "message" => "Database connection failed: " . $conn->connect_error]);
+mysqli_report(MYSQLI_REPORT_OFF);
+// Create connection directly to the database
+$conn = @new mysqli($host, $user, $pass, $dbname);
+if (mysqli_connect_errno()) {
+    echo json_encode(["status" => "error", "message" => "Database connection failed: " . mysqli_connect_error()]);
     exit;
 }
-
-// Create database if not exists (Hostinger users typically have to create DB manually, but this won't hurt)
-$conn->query("CREATE DATABASE IF NOT EXISTS `$dbname`");
-$conn->select_db($dbname);
 
 // Create users table if not exists
 $tableQuery = "CREATE TABLE IF NOT EXISTS users (
@@ -41,10 +38,12 @@ $tableQuery = "CREATE TABLE IF NOT EXISTS users (
     address TEXT NOT NULL,
     password VARCHAR(255) NOT NULL,
     login_count INT DEFAULT 0,
+    whatsapp_joined TINYINT(1) DEFAULT 0,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )";
 $conn->query($tableQuery);
 @$conn->query("ALTER TABLE users ADD COLUMN login_count INT DEFAULT 0"); // Add column if table already exists
+@$conn->query("ALTER TABLE users ADD COLUMN whatsapp_joined TINYINT(1) DEFAULT 0"); // Add column if table already exists
 
 // Parse JSON Payload
 $json = file_get_contents('php://input');
@@ -82,9 +81,10 @@ if ($action == 'register') {
     
     // Hash password
     $hashed = password_hash($password, PASSWORD_DEFAULT);
+    $whatsapp_joined = isset($data['whatsapp_joined']) ? intval($data['whatsapp_joined']) : 0;
     
-    $stmt = $conn->prepare("INSERT INTO users (name, contact_number, email, address, password) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssss", $name, $contact, $email, $address, $hashed);
+    $stmt = $conn->prepare("INSERT INTO users (name, contact_number, email, address, password, whatsapp_joined) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssssi", $name, $contact, $email, $address, $hashed, $whatsapp_joined);
     
     if ($stmt->execute()) {
         $user_id = $stmt->insert_id;
@@ -93,7 +93,8 @@ if ($action == 'register') {
             "name" => $name,
             "contact_number" => $contact,
             "email" => $email,
-            "address" => $address
+            "address" => $address,
+            "whatsapp_joined" => $whatsapp_joined
         ];
         echo json_encode(["status" => "success", "message" => "Registration successful!", "user" => $user_data]);
     } else {
