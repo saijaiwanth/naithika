@@ -1539,3 +1539,8 @@ body.no-scroll {
     height: 55px;
   }
 }
+
+/* Hide Login/Profile links for live testing */
+.auth-nav-link {
+  display: none !important;
+}
