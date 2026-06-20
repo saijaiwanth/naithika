@@ -2,6 +2,11 @@
 session_start();
 header('Content-Type: application/json');
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require 'vendor/autoload.php';
+
 // Load .env file manually if it exists
 $envPath = __DIR__ . '/.env';
 if (file_exists($envPath)) {
@@ -39,11 +44,15 @@ $tableQuery = "CREATE TABLE IF NOT EXISTS users (
     password VARCHAR(255) NOT NULL,
     login_count INT DEFAULT 0,
     whatsapp_joined TINYINT(1) DEFAULT 0,
+    reset_otp VARCHAR(6) DEFAULT NULL,
+    reset_otp_expiry DATETIME DEFAULT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )";
 $conn->query($tableQuery);
 @$conn->query("ALTER TABLE users ADD COLUMN login_count INT DEFAULT 0"); // Add column if table already exists
 @$conn->query("ALTER TABLE users ADD COLUMN whatsapp_joined TINYINT(1) DEFAULT 0"); // Add column if table already exists
+@$conn->query("ALTER TABLE users ADD COLUMN reset_otp VARCHAR(6) DEFAULT NULL");
+@$conn->query("ALTER TABLE users ADD COLUMN reset_otp_expiry DATETIME DEFAULT NULL");
 
 // Parse JSON Payload
 $json = file_get_contents('php://input');
@@ -186,6 +195,118 @@ if ($action == 'update_profile') {
         } else {
             echo json_encode(["status" => "error", "message" => "Database error during profile update."]);
         }
+    }
+    exit;
+}
+
+if ($action == 'forgot_password') {
+    $email = isset($data['email']) ? trim($data['email']) : '';
+    
+    if (empty($email)) {
+        echo json_encode(["status" => "error", "message" => "Email is required."]);
+        exit;
+    }
+    
+    // Check if user exists
+    $stmt = $conn->prepare("SELECT id FROM users WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    if ($result->num_rows === 0) {
+        echo json_encode(["status" => "error", "message" => "No account found with this email address."]);
+        exit;
+    }
+    
+    // Generate 6-digit OTP
+    $otp = strval(rand(100000, 999999));
+    $expiry = date("Y-m-d H:i:s", strtotime("+10 minutes"));
+    
+    // Store OTP in database
+    $updateStmt = $conn->prepare("UPDATE users SET reset_otp = ?, reset_otp_expiry = ? WHERE email = ?");
+    $updateStmt->bind_param("sss", $otp, $expiry, $email);
+    
+    if (!$updateStmt->execute()) {
+        echo json_encode(["status" => "error", "message" => "Database error. Please try again."]);
+        exit;
+    }
+    
+    // Send email using PHPMailer
+    $mail = new PHPMailer(true);
+    try {
+        $mail->isSMTP();
+        $mail->Host       = 'smtp.gmail.com';
+        $mail->SMTPAuth   = true;
+        $mail->Username   = 'naithikafoods@gmail.com';
+        $mail->Password   = 'rlehmfsogwgvenaz';
+        $mail->SMTPSecure = 'ssl';
+        $mail->Port       = 465;
+        
+        $mail->setFrom('naithikafoods@gmail.com', 'Naithika Foods');
+        $mail->addAddress($email);
+        
+        $mail->isHTML(true);
+        $mail->Subject = 'Password Reset OTP - Naithika Foods';
+        $mail->Body    = "
+            <div style='font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #eee; border-radius: 10px;'>
+                <h2 style='color: #e97b06; text-align: center;'>Naithika Foods</h2>
+                <hr style='border: 0; border-top: 1px solid #eee;'>
+                <p>Hello,</p>
+                <p>We received a request to reset your password. Use the following 6-digit One-Time Password (OTP) to proceed. This OTP is valid for 10 minutes.</p>
+                <div style='text-align: center; margin: 30px 0;'>
+                    <span style='font-size: 28px; font-weight: bold; letter-spacing: 5px; color: #333; background: #f9f9f9; padding: 10px 20px; border-radius: 5px; border: 1px dashed #e97b06;'>{$otp}</span>
+                </div>
+                <p>If you did not request this, you can safely ignore this email.</p>
+                <p>Best regards,<br>Naithika Foods Team</p>
+            </div>
+        ";
+        
+        $mail->send();
+        echo json_encode(["status" => "success", "message" => "OTP sent successfully to your email."]);
+    } catch (Exception $e) {
+        echo json_encode(["status" => "error", "message" => "Mailer Error: " . $mail->ErrorInfo]);
+    }
+    exit;
+}
+
+if ($action == 'reset_password') {
+    $email = isset($data['email']) ? trim($data['email']) : '';
+    $otp = isset($data['otp']) ? trim($data['otp']) : '';
+    $password = isset($data['password']) ? $data['password'] : '';
+    
+    if (empty($email) || empty($otp) || empty($password)) {
+        echo json_encode(["status" => "error", "message" => "All fields (Email, OTP, Password) are required."]);
+        exit;
+    }
+    
+    // Check if OTP matches and is not expired
+    $stmt = $conn->prepare("SELECT reset_otp, reset_otp_expiry FROM users WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    if ($result->num_rows === 0) {
+        echo json_encode(["status" => "error", "message" => "User not found."]);
+        exit;
+    }
+    
+    $row = $result->fetch_assoc();
+    $now = date("Y-m-d H:i:s");
+    
+    if ($row['reset_otp'] !== $otp || $now > $row['reset_otp_expiry']) {
+        echo json_encode(["status" => "error", "message" => "Invalid or expired OTP."]);
+        exit;
+    }
+    
+    // Update password
+    $hashed = password_hash($password, PASSWORD_DEFAULT);
+    $updateStmt = $conn->prepare("UPDATE users SET password = ?, reset_otp = NULL, reset_otp_expiry = NULL WHERE email = ?");
+    $updateStmt->bind_param("ss", $hashed, $email);
+    
+    if ($updateStmt->execute()) {
+        echo json_encode(["status" => "success", "message" => "Password reset successfully. You can now login."]);
+    } else {
+        echo json_encode(["status" => "error", "message" => "Failed to update password."]);
     }
     exit;
 }

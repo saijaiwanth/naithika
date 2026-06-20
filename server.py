@@ -58,6 +58,8 @@ class CustomHandler(http.server.SimpleHTTPRequestHandler):
                         password VARCHAR(255) NOT NULL,
                         login_count INT DEFAULT 0,
                         whatsapp_joined TINYINT(1) DEFAULT 0,
+                        reset_otp VARCHAR(6) DEFAULT NULL,
+                        reset_otp_expiry DATETIME DEFAULT NULL,
                         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                     )
                 """)
@@ -71,6 +73,18 @@ class CustomHandler(http.server.SimpleHTTPRequestHandler):
 
                 try:
                     cursor.execute("ALTER TABLE users ADD COLUMN whatsapp_joined TINYINT(1) DEFAULT 0")
+                    conn.commit()
+                except:
+                    pass
+
+                try:
+                    cursor.execute("ALTER TABLE users ADD COLUMN reset_otp VARCHAR(6) DEFAULT NULL")
+                    conn.commit()
+                except:
+                    pass
+
+                try:
+                    cursor.execute("ALTER TABLE users ADD COLUMN reset_otp_expiry DATETIME DEFAULT NULL")
                     conn.commit()
                 except:
                     pass
@@ -153,6 +167,92 @@ class CustomHandler(http.server.SimpleHTTPRequestHandler):
                             "id": user_id, "name": name, "contact_number": contact, "email": email, "address": address
                         }
                         response = {"status": "success", "message": "Profile updated successfully!", "user": user_data}
+
+                elif action == 'forgot_password':
+                    email = data.get('email', '').strip()
+                    if not email:
+                        response = {"status": "error", "message": "Email is required."}
+                    else:
+                        cursor.execute("SELECT id FROM users WHERE email = %s", (email,))
+                        if not cursor.fetchone():
+                            response = {"status": "error", "message": "No account found with this email address."}
+                        else:
+                            import random
+                            from datetime import datetime, timedelta
+                            otp = str(random.randint(100000, 999999))
+                            expiry = (datetime.now() + timedelta(minutes=10)).strftime('%Y-%m-%d %H:%M:%S')
+                            
+                            cursor.execute("UPDATE users SET reset_otp = %s, reset_otp_expiry = %s WHERE email = %s", (otp, expiry, email))
+                            conn.commit()
+                            
+                            # Try to send email
+                            try:
+                                import smtplib
+                                from email.mime.text import MIMEText
+                                from email.mime.multipart import MIMEMultipart
+                                
+                                msg = MIMEMultipart()
+                                msg['From'] = 'naithikafoods@gmail.com'
+                                msg['To'] = email
+                                msg['Subject'] = 'Password Reset OTP - Naithika Foods'
+                                
+                                body = f"""
+                                <html>
+                                <body style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
+                                    <h2 style="color: #e97b06; text-align: center;">Naithika Foods</h2>
+                                    <hr style="border: 0; border-top: 1px solid #eee;">
+                                    <p>Hello,</p>
+                                    <p>We received a request to reset your password. Use the following 6-digit One-Time Password (OTP) to proceed. This OTP is valid for 10 minutes.</p>
+                                    <div style="text-align: center; margin: 30px 0;">
+                                        <span style="font-size: 28px; font-weight: bold; letter-spacing: 5px; color: #333; background: #f9f9f9; padding: 10px 20px; border-radius: 5px; border: 1px dashed #e97b06;">{otp}</span>
+                                    </div>
+                                    <p>If you did not request this, you can safely ignore this email.</p>
+                                    <p>Best regards,<br>Naithika Foods Team</p>
+                                </body>
+                                </html>
+                                """
+                                msg.attach(MIMEText(body, 'html'))
+                                
+                                smtp_server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
+                                smtp_server.login('naithikafoods@gmail.com', 'rlehmfsogwgvenaz')
+                                smtp_server.sendmail('naithikafoods@gmail.com', email, msg.as_string())
+                                smtp_server.quit()
+                            except Exception as mail_err:
+                                print("Local mail sending error:", mail_err)
+                            
+                            print(f"\n[LOCAL TEST OTP] Password reset OTP for {email} is: {otp}\n")
+                            response = {"status": "success", "message": "OTP sent successfully to your email."}
+
+                elif action == 'reset_password':
+                    email = data.get('email', '').strip()
+                    otp = data.get('otp', '').strip()
+                    password = data.get('password', '')
+                    
+                    if not email or not otp or not password:
+                        response = {"status": "error", "message": "All fields are required."}
+                    else:
+                        cursor.execute("SELECT reset_otp, reset_otp_expiry FROM users WHERE email = %s", (email,))
+                        row = cursor.fetchone()
+                        if not row:
+                            response = {"status": "error", "message": "User not found."}
+                        else:
+                            from datetime import datetime
+                            db_otp = row[0]
+                            db_expiry = row[1]
+                            
+                            if isinstance(db_expiry, str):
+                                db_expiry = datetime.strptime(db_expiry, '%Y-%m-%d %H:%M:%S')
+                            
+                            now = datetime.now()
+                            if db_otp != otp or now > db_expiry:
+                                response = {"status": "error", "message": "Invalid or expired OTP."}
+                            else:
+                                import bcrypt
+                                hashed = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+                                cursor.execute("UPDATE users SET password = %s, reset_otp = NULL, reset_otp_expiry = NULL WHERE email = %s",
+                                               (hashed.decode('utf-8'), email))
+                                conn.commit()
+                                response = {"status": "success", "message": "Password reset successfully. You can now login."}
 
                 cursor.close()
                 conn.close()

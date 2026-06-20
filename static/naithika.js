@@ -251,14 +251,17 @@ document.addEventListener('DOMContentLoaded', () => {
         <div id="authModalOverlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999; justify-content:center; align-items:center;">
             <div style="background:#fff; border-radius:12px; width:400px; max-width:90%; padding:20px; font-family:'Inter', sans-serif; position:relative; max-height:90vh; overflow-y:auto;">
                 <button onclick="document.getElementById('authModalOverlay').style.display='none'" style="position:absolute; right:15px; top:15px; background:none; border:none; font-size:24px; cursor:pointer; color:#777;">&times;</button>
-                <div style="display:flex; border-bottom:1px solid #ccc; margin-bottom:20px;">
+                <div id="auth-tab-header" style="display:flex; border-bottom:1px solid #ccc; margin-bottom:20px;">
                     <div id="tab-login" onclick="switchAuthTab('login')" style="flex:1; text-align:center; padding:10px; cursor:pointer; font-weight:bold; color:#777; border-bottom:2px solid transparent;">Login</div>
                     <div id="tab-register" onclick="switchAuthTab('register')" style="flex:1; text-align:center; padding:10px; cursor:pointer; font-weight:bold; color:#e97b06; border-bottom:2px solid #e97b06;">Register</div>
                 </div>
                 <div id="form-login" style="display:none;">
                     <h3 style="margin-top:0; color:#333;">Welcome Back</h3>
-                    <input type="text" id="loginUsername" placeholder="Email or Contact Number" style="width:100%; padding:10px; margin-bottom:15px; border:1px solid #ccc; border-radius:6px; box-sizing:border-box;">
-                    <input type="password" id="loginPassword" placeholder="Password" style="width:100%; padding:10px; margin-bottom:15px; border:1px solid #ccc; border-radius:6px; box-sizing:border-box;">
+                    <input type="text" id="loginUsername" placeholder="Email or Contact Number" style="width:100%; padding:10px; margin-bottom:10px; border:1px solid #ccc; border-radius:6px; box-sizing:border-box;">
+                    <input type="password" id="loginPassword" placeholder="Password" style="width:100%; padding:10px; margin-bottom:10px; border:1px solid #ccc; border-radius:6px; box-sizing:border-box;">
+                    <div style="text-align:right; margin-bottom:15px;">
+                        <a href="#" onclick="switchAuthTab('forgot'); return false;" style="color:#e97b06; font-size:13px; text-decoration:none;">Forgot Password?</a>
+                    </div>
                     <button onclick="submitLogin()" style="width:100%; padding:10px; background:#e97b06; color:#fff; border:none; border-radius:6px; font-weight:bold; cursor:pointer;">Login</button>
                 </div>
                 <div id="form-register">
@@ -276,6 +279,26 @@ document.addEventListener('DOMContentLoaded', () => {
                         </label>
                     </div>
                     <button id="regBtn" onclick="submitRegister()" style="width:100%; padding:10px; background:#ccc; color:#fff; border:none; border-radius:6px; font-weight:bold; cursor:not-allowed;" disabled>Register</button>
+                </div>
+                <div id="form-forgot" style="display:none;">
+                    <h3 style="margin-top:0; color:#333;">Forgot Password</h3>
+                    <p style="font-size:13px; color:#666; margin-bottom:15px;">Enter your registered Email address to receive a verification OTP.</p>
+                    <input type="email" id="forgotEmail" placeholder="Email Address" style="width:100%; padding:10px; margin-bottom:15px; border:1px solid #ccc; border-radius:6px; box-sizing:border-box;">
+                    <button onclick="submitForgotPassword()" style="width:100%; padding:10px; background:#e97b06; color:#fff; border:none; border-radius:6px; font-weight:bold; cursor:pointer; margin-bottom:15px;">Send OTP</button>
+                    <div style="text-align:center;">
+                        <a href="#" onclick="switchAuthTab('login'); return false;" style="color:#777; font-size:13px; text-decoration:none;">Back to Login</a>
+                    </div>
+                </div>
+                <div id="form-reset" style="display:none;">
+                    <h3 style="margin-top:0; color:#333;">Reset Password</h3>
+                    <p style="font-size:13px; color:#666; margin-bottom:15px;">Enter the 6-digit OTP sent to your email and your new password.</p>
+                    <input type="text" id="resetOTP" placeholder="6-digit OTP" maxlength="6" style="width:100%; padding:10px; margin-bottom:10px; border:1px solid #ccc; border-radius:6px; box-sizing:border-box;">
+                    <input type="password" id="resetNewPassword" placeholder="New Password" onkeyup="checkResetPassword()" style="width:100%; padding:10px; margin-bottom:5px; border:1px solid #ccc; border-radius:6px; box-sizing:border-box;">
+                    <div id="resetPwdError" style="color:red; font-size:12px; margin-bottom:15px; display:none;">Must be >6 chars, 1 uppercase, 1 lowercase, 1 number, 1 special char</div>
+                    <button id="resetBtn" onclick="submitResetPassword()" style="width:100%; padding:10px; background:#ccc; color:#fff; border:none; border-radius:6px; font-weight:bold; cursor:not-allowed;" disabled>Reset Password</button>
+                    <div style="text-align:center; margin-top:15px;">
+                        <a href="#" onclick="switchAuthTab('login'); return false;" style="color:#777; font-size:13px; text-decoration:none;">Back to Login</a>
+                    </div>
                 </div>
             </div>
         </div>`;
@@ -305,10 +328,18 @@ function updateAuthNavLinks() {
 function switchAuthTab(tab) {
     document.getElementById('form-login').style.display = tab === 'login' ? 'block' : 'none';
     document.getElementById('form-register').style.display = tab === 'register' ? 'block' : 'none';
-    document.getElementById('tab-login').style.color = tab === 'login' ? '#e97b06' : '#777';
-    document.getElementById('tab-login').style.borderBottomColor = tab === 'login' ? '#e97b06' : 'transparent';
-    document.getElementById('tab-register').style.color = tab === 'register' ? '#e97b06' : '#777';
-    document.getElementById('tab-register').style.borderBottomColor = tab === 'register' ? '#e97b06' : 'transparent';
+    document.getElementById('form-forgot').style.display = tab === 'forgot' ? 'block' : 'none';
+    document.getElementById('form-reset').style.display = tab === 'reset' ? 'block' : 'none';
+    
+    if (tab === 'login' || tab === 'register') {
+        document.getElementById('tab-login').style.color = tab === 'login' ? '#e97b06' : '#777';
+        document.getElementById('tab-login').style.borderBottomColor = tab === 'login' ? '#e97b06' : 'transparent';
+        document.getElementById('tab-register').style.color = tab === 'register' ? '#e97b06' : '#777';
+        document.getElementById('tab-register').style.borderBottomColor = tab === 'register' ? '#e97b06' : 'transparent';
+        document.getElementById('auth-tab-header').style.display = 'flex';
+    } else {
+        document.getElementById('auth-tab-header').style.display = 'none';
+    }
 }
 
 function checkPassword() {
@@ -348,6 +379,16 @@ function submitRegister() {
         return;
     }
     
+    let payload = {
+        action: 'register',
+        name: name,
+        contact_number: contact,
+        email: email,
+        address: addr,
+        password: pwd,
+        whatsapp_joined: whatsapp_joined
+    };
+    
     fetch('auth.php', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(payload) })
     .then(r => r.text().then(text => {
         try {
@@ -372,6 +413,88 @@ function submitRegister() {
             switchAuthTab('login');
         } else { naithikaAlert(data.message, true); }
     }).catch(e => { naithikaAlert("Registration failed. Server might be down.", true); });
+}
+
+function submitForgotPassword() {
+    let email = document.getElementById('forgotEmail').value.trim();
+    if (!email) {
+        naithikaAlert("Please enter your email address.", true);
+        return;
+    }
+    let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        naithikaAlert("Please enter a valid email address.", true);
+        return;
+    }
+    
+    naithikaAlert("Sending OTP...");
+    
+    fetch('auth.php', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ action: 'forgot_password', email: email })
+    })
+    .then(r => r.json())
+    .then(data => {
+        if (data.status === 'success') {
+            naithikaAlert(data.message);
+            switchAuthTab('reset');
+        } else {
+            naithikaAlert(data.message, true);
+        }
+    })
+    .catch(e => {
+        naithikaAlert("Failed to send OTP. Server might be offline.", true);
+    });
+}
+
+function checkResetPassword() {
+    let pwd = document.getElementById('resetNewPassword').value;
+    let err = document.getElementById('resetPwdError');
+    let btn = document.getElementById('resetBtn');
+    let valid = pwd.length > 6 && /[A-Z]/.test(pwd) && /[a-z]/.test(pwd) && /[0-9]/.test(pwd) && /[^A-Za-z0-9]/.test(pwd);
+    if (pwd.length > 0 && !valid) {
+        err.style.display = 'block'; btn.disabled = true; btn.style.background = '#ccc'; btn.style.cursor = 'not-allowed';
+    } else if (valid) {
+        err.style.display = 'none'; btn.disabled = false; btn.style.background = '#e97b06'; btn.style.cursor = 'pointer';
+    } else {
+        err.style.display = 'none'; btn.disabled = true; btn.style.background = '#ccc'; btn.style.cursor = 'not-allowed';
+    }
+    return valid;
+}
+
+function submitResetPassword() {
+    if (!checkResetPassword()) return;
+    let email = document.getElementById('forgotEmail').value.trim();
+    let otp = document.getElementById('resetOTP').value.trim();
+    let newPassword = document.getElementById('resetNewPassword').value;
+    
+    if (!otp || otp.length !== 6) {
+        naithikaAlert("Please enter the 6-digit OTP.", true);
+        return;
+    }
+    
+    fetch('auth.php', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ action: 'reset_password', email: email, otp: otp, password: newPassword })
+    })
+    .then(r => r.json())
+    .then(data => {
+        if (data.status === 'success') {
+            naithikaAlert(data.message);
+            // Clear fields
+            document.getElementById('forgotEmail').value = '';
+            document.getElementById('resetOTP').value = '';
+            document.getElementById('resetNewPassword').value = '';
+            switchAuthTab('login');
+        } else {
+            naithikaAlert(data.message, true);
+        }
+    })
+    .catch(e => {
+        naithikaAlert("Failed to reset password. Server might be offline.", true);
+    });
 }
 
 function submitLogin() {
