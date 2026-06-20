@@ -244,9 +244,158 @@ function updateQtyFromCard(name, change, price, image) {
 document.addEventListener('DOMContentLoaded', updateCartBadge);
 
 
-// --- GLOBAL AUTHENTICATION SYSTEM (DISABLED) ---
-function openAccount() {}
-function updateAuthNavLinks() {}
+// --- GLOBAL AUTHENTICATION SYSTEM ---
+document.addEventListener('DOMContentLoaded', () => {
+    if (!document.getElementById('authModalOverlay')) {
+        let authHtml = `
+        <div id="authModalOverlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999; justify-content:center; align-items:center;">
+            <div style="background:#fff; border-radius:12px; width:400px; max-width:90%; padding:20px; font-family:'Inter', sans-serif; position:relative; max-height:90vh; overflow-y:auto;">
+                <button onclick="document.getElementById('authModalOverlay').style.display='none'" style="position:absolute; right:15px; top:15px; background:none; border:none; font-size:24px; cursor:pointer; color:#777;">&times;</button>
+                <div style="display:flex; border-bottom:1px solid #ccc; margin-bottom:20px;">
+                    <div id="tab-login" onclick="switchAuthTab('login')" style="flex:1; text-align:center; padding:10px; cursor:pointer; font-weight:bold; color:#777; border-bottom:2px solid transparent;">Login</div>
+                    <div id="tab-register" onclick="switchAuthTab('register')" style="flex:1; text-align:center; padding:10px; cursor:pointer; font-weight:bold; color:#e97b06; border-bottom:2px solid #e97b06;">Register</div>
+                </div>
+                <div id="form-login" style="display:none;">
+                    <h3 style="margin-top:0; color:#333;">Welcome Back</h3>
+                    <input type="text" id="loginUsername" placeholder="Email or Contact Number" style="width:100%; padding:10px; margin-bottom:15px; border:1px solid #ccc; border-radius:6px; box-sizing:border-box;">
+                    <input type="password" id="loginPassword" placeholder="Password" style="width:100%; padding:10px; margin-bottom:15px; border:1px solid #ccc; border-radius:6px; box-sizing:border-box;">
+                    <button onclick="submitLogin()" style="width:100%; padding:10px; background:#e97b06; color:#fff; border:none; border-radius:6px; font-weight:bold; cursor:pointer;">Login</button>
+                </div>
+                <div id="form-register">
+                    <h3 style="margin-top:0; color:#333;">Create Account</h3>
+                    <input type="text" id="regName" placeholder="Full Name" style="width:100%; padding:10px; margin-bottom:10px; border:1px solid #ccc; border-radius:6px; box-sizing:border-box;">
+                    <input type="tel" id="regContact" placeholder="Contact Number" style="width:100%; padding:10px; margin-bottom:10px; border:1px solid #ccc; border-radius:6px; box-sizing:border-box;" oninput="this.value = this.value.replace(/[^0-9]/g, '');" onblur="validateContactRealTime(this)" maxlength="10">
+                    <input type="email" id="regEmail" placeholder="Email Address" style="width:100%; padding:10px; margin-bottom:10px; border:1px solid #ccc; border-radius:6px; box-sizing:border-box;" onblur="validateEmailRealTime(this)">
+                    <textarea id="regAddress" placeholder="Shipping Address" rows="3" style="width:100%; padding:10px; margin-bottom:10px; border:1px solid #ccc; border-radius:6px; box-sizing:border-box;"></textarea>
+                    <input type="password" id="regPassword" placeholder="Password" onkeyup="checkPassword()" style="width:100%; padding:10px; margin-bottom:5px; border:1px solid #ccc; border-radius:6px; box-sizing:border-box;">
+                    <div id="pwdError" style="color:red; font-size:12px; margin-bottom:10px; display:none;">Must be >6 chars, 1 uppercase, 1 lowercase, 1 number, 1 special char</div>
+                    <div style="margin-bottom:15px; display:flex; align-items:flex-start; gap:8px;">
+                        <input type="checkbox" id="regWhatsappJoined" style="margin-top:3px; cursor:pointer;">
+                        <label for="regWhatsappJoined" style="font-size:13px; color:#555; cursor:pointer; line-height:1.4;">
+                            I have joined the <a href="https://chat.whatsapp.com/J9Q4Fff9WC52H2z8P14D1i" target="_blank" style="color:#e97b06; text-decoration:underline; font-weight:bold;">WhatsApp Channel for Updates</a>
+                        </label>
+                    </div>
+                    <button id="regBtn" onclick="submitRegister()" style="width:100%; padding:10px; background:#ccc; color:#fff; border:none; border-radius:6px; font-weight:bold; cursor:not-allowed;" disabled>Register</button>
+                </div>
+            </div>
+        </div>`;
+        document.body.insertAdjacentHTML('beforeend', authHtml);
+    }
+    updateAuthNavLinks();
+});
+
+function openAccount() {
+    let user = JSON.parse(sessionStorage.getItem('naithika_user'));
+    if (user) {
+        window.location.href = "profile.html";
+    } else {
+        document.getElementById('authModalOverlay').style.display = 'flex';
+        switchAuthTab('login');
+    }
+}
+
+function updateAuthNavLinks() {
+    let user = JSON.parse(sessionStorage.getItem('naithika_user'));
+    let links = document.querySelectorAll('.auth-nav-link');
+    links.forEach(link => {
+        link.textContent = user ? "PROFILE" : "LOGIN";
+    });
+}
+
+function switchAuthTab(tab) {
+    document.getElementById('form-login').style.display = tab === 'login' ? 'block' : 'none';
+    document.getElementById('form-register').style.display = tab === 'register' ? 'block' : 'none';
+    document.getElementById('tab-login').style.color = tab === 'login' ? '#e97b06' : '#777';
+    document.getElementById('tab-login').style.borderBottomColor = tab === 'login' ? '#e97b06' : 'transparent';
+    document.getElementById('tab-register').style.color = tab === 'register' ? '#e97b06' : '#777';
+    document.getElementById('tab-register').style.borderBottomColor = tab === 'register' ? '#e97b06' : 'transparent';
+}
+
+function checkPassword() {
+    let pwd = document.getElementById('regPassword').value;
+    let err = document.getElementById('pwdError');
+    let btn = document.getElementById('regBtn');
+    let valid = pwd.length > 6 && /[A-Z]/.test(pwd) && /[a-z]/.test(pwd) && /[0-9]/.test(pwd) && /[^A-Za-z0-9]/.test(pwd);
+    if (pwd.length > 0 && !valid) {
+        err.style.display = 'block'; btn.disabled = true; btn.style.background = '#ccc'; btn.style.cursor = 'not-allowed';
+    } else if (valid) {
+        err.style.display = 'none'; btn.disabled = false; btn.style.background = '#e97b06'; btn.style.cursor = 'pointer';
+    } else {
+        err.style.display = 'none'; btn.disabled = true; btn.style.background = '#ccc'; btn.style.cursor = 'not-allowed';
+    }
+    return valid;
+}
+
+function submitRegister() {
+    if (!checkPassword()) return;
+    let name = document.getElementById('regName').value;
+    let contact = document.getElementById('regContact').value;
+    let email = document.getElementById('regEmail').value;
+    let addr = document.getElementById('regAddress').value;
+    let pwd = document.getElementById('regPassword').value;
+    let whatsapp_joined = document.getElementById('regWhatsappJoined').checked ? 1 : 0;
+    if(!name || !contact || !email || !addr) { naithikaAlert("Please fill all fields", true); return; }
+    
+    let contactRegex = /^[0-9]{10}$/;
+    if (!contactRegex.test(contact)) {
+        naithikaAlert("Please enter a valid 10-digit mobile number.", true);
+        return;
+    }
+    
+    let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        naithikaAlert("Please enter a valid email address.", true);
+        return;
+    }
+    
+    fetch('auth.php', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(payload) })
+    .then(r => r.text().then(text => {
+        try {
+            return JSON.parse(text);
+        } catch (err) {
+            console.error("Server response was not JSON:", text);
+            naithikaAlert("Server returned invalid response. Check console.", true);
+            throw new Error("Invalid JSON from server");
+        }
+    }))
+    .then(data => {
+        if (data.status === 'success') {
+            naithikaAlert("Registration successful! Please login to continue.");
+            // Clear registration fields
+            document.getElementById('regName').value = '';
+            document.getElementById('regContact').value = '';
+            document.getElementById('regEmail').value = '';
+            document.getElementById('regAddress').value = '';
+            document.getElementById('regPassword').value = '';
+            document.getElementById('regWhatsappJoined').checked = false;
+            // Switch to login tab automatically
+            switchAuthTab('login');
+        } else { naithikaAlert(data.message, true); }
+    }).catch(e => { naithikaAlert("Registration failed. Server might be down.", true); });
+}
+
+function submitLogin() {
+    let un = document.getElementById('loginUsername').value;
+    let pw = document.getElementById('loginPassword').value;
+    if(!un || !pw) { naithikaAlert("Please enter username and password", true); return; }
+    let payload = { action: 'login', username: un, password: pw };
+    fetch('auth.php', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(payload) })
+    .then(r => r.json())
+    .then(data => {
+        if (data.status === 'success') {
+            sessionStorage.setItem('naithika_user', JSON.stringify(data.user));
+            document.getElementById('authModalOverlay').style.display = 'none';
+            updateAuthNavLinks();
+            if (typeof renderCart === 'function') { 
+                renderCart(); 
+                naithikaAlert("Logged in successfully! Click 'Checkout via WhatsApp' to complete your order.");
+            } else { 
+                window.location.href = "profile.html"; 
+            }
+        } else { if (data.status === "success") { naithikaAlert(data.message); } else { naithikaAlert(data.message, true); } }
+    }).catch(e => { naithikaAlert("Login failed. Server might be down.", true); });
+}
+
 
 function naithikaAlert(message, isError=false) {
     let toast = document.createElement("div");
@@ -295,4 +444,52 @@ function naithikaAlert(message, isError=false) {
         el.style.opacity = "0"; el.style.top = "44px";
         setTimeout(() => { if (document.body.contains(el)) document.body.removeChild(el); }, 400);
     }
+}
+
+function validateEmailRealTime(inputElement) {
+    let email = inputElement.value;
+    if (email.length === 0) return;
+    let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        if (typeof naithikaAlert === 'function') naithikaAlert("Please enter a valid email address.", true);
+        else alert("Please enter a valid email address.");
+        return;
+    }
+    
+    // Check DB
+    fetch('auth.php', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ action: 'check_exists', field: 'email', value: email })
+    }).then(r => r.json()).then(data => {
+        if (data.status === 'exists') {
+            if (typeof naithikaAlert === 'function') naithikaAlert(data.message, true);
+            else alert(data.message);
+            inputElement.value = ''; // clear it
+        }
+    }).catch(e => console.error(e));
+}
+
+function validateContactRealTime(inputElement) {
+    let contact = inputElement.value;
+    if (contact.length === 0) return;
+    let contactRegex = /^[0-9]{10}$/;
+    if (!contactRegex.test(contact)) {
+        if (typeof naithikaAlert === 'function') naithikaAlert("Please enter a valid 10-digit mobile number.", true);
+        else alert("Please enter a valid 10-digit mobile number.");
+        return;
+    }
+    
+    // Check DB
+    fetch('auth.php', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ action: 'check_exists', field: 'contact_number', value: contact })
+    }).then(r => r.json()).then(data => {
+        if (data.status === 'exists') {
+            if (typeof naithikaAlert === 'function') naithikaAlert(data.message, true);
+            else alert(data.message);
+            inputElement.value = ''; // clear it
+        }
+    }).catch(e => console.error(e));
 }

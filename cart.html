@@ -310,7 +310,7 @@ body {
 
             <!--<a href="offer.html" class="nav-link">OFFERS</a>-->
             <a href="contact.html" class="nav-link">CONTACT US</a>
-            
+            <a href="#" onclick="openAccount(); return false;" class="nav-link auth-nav-link" style="font-weight:bold; color:#e97b06;">LOGIN</a>
             <a href="cart.html" class="nav-link"><span style="position: relative; display: inline-flex; align-items: center; margin-left: 5px;">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
     <span class="cart-badge" style="display:none; position: absolute; top: -8px; right: -10px; background: #e97b06; color: #fff; border-radius: 50%; min-width: 18px; height: 18px; align-items: center; justify-content: center; font-size: 11px; font-weight: bold; line-height: 1; padding: 2px;">0</span>
@@ -343,7 +343,7 @@ body {
         <!--<a href="herbal_tea.html" class="mobile-sub-item">Herbal Teas</a>-->
 
         <a href="contact.html" class="nav-link">CONTACT US</a>
-        
+        <a href="#" onclick="openAccount(); return false;" class="nav-link auth-nav-link" style="font-weight:bold; color:#e97b06;">LOGIN</a>
             <a href="cart.html" class="nav-link"><span style="position: relative; display: inline-flex; align-items: center; margin-left: 5px;">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
     <span class="cart-badge" style="display:none; position: absolute; top: -8px; right: -10px; background: #e97b06; color: #fff; border-radius: 50%; min-width: 18px; height: 18px; align-items: center; justify-content: center; font-size: 11px; font-weight: bold; line-height: 1; padding: 2px;">0</span>
@@ -450,28 +450,42 @@ function renderCart() {
         `;
     });
 
-    const phoneNumber = "918125121347";
-    let message = "*New Order Request*\n------------------\n";
+    let currentUser = JSON.parse(sessionStorage.getItem('naithika_user') || 'null');
+    let checkoutBtnHtml = '';
     
-    cart.forEach((item, index) => {
-        const itemTotal = item.price * item.quantity;
-        message += `*${index + 1}. ${item.name}*\n`;
-        message += `   Qty: ${item.quantity}\n`;
-        message += `   Price: ₹${item.price}\n`;
-        message += `   Subtotal: ₹${itemTotal}\n\n`;
-    });
-    
-    message += `------------------\n`;
-    message += `*Grand Total: ₹${grandTotal.toFixed(2)}*\n\n`;
-    message += "Please confirm availability.";
-    
-    const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-    
-    let checkoutBtnHtml = `
-        <a class="btn checkout-btn" href="${whatsappURL}" target="_blank">
-            Checkout via WhatsApp
-        </a>
-    `;
+    if (currentUser) {
+        const phoneNumber = "918125121347";
+        let message = "*New Order Request*\n------------------\n";
+        if (currentUser.name) {
+            message += `*Customer Details:*\nName: ${currentUser.name || ''}\nContact: ${currentUser.contact_number || ''}\nEmail: ${currentUser.email || ''}\n*Shipping Address:*\n${currentUser.address || ''}\n------------------\n`;
+        }
+        
+        cart.forEach((item, index) => {
+            const itemTotal = item.price * item.quantity;
+            message += `*${index + 1}. ${item.name}*\n`;
+            message += `   Qty: ${item.quantity}\n`;
+            message += `   Price: ₹${item.price}\n`;
+            message += `   Subtotal: ₹${itemTotal}\n\n`;
+        });
+        
+        message += `------------------\n`;
+        message += `*Grand Total: ₹${grandTotal.toFixed(2)}*\n\n`;
+        message += "Please confirm availability.";
+        
+        const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+        
+        checkoutBtnHtml = `
+            <a class="btn checkout-btn" href="${whatsappURL}">
+                Checkout via WhatsApp
+            </a>
+        `;
+    } else {
+        checkoutBtnHtml = `
+            <button class="btn checkout-btn" onclick="processCheckout()">
+                Checkout via WhatsApp
+            </button>
+        `;
+    }
 
     footer.innerHTML = `
         <div class="grand-total">Total: ₹${grandTotal.toFixed(2)}</div>
@@ -695,7 +709,52 @@ function showToast(message) {
  */
 
 
-// Initial Run
+function processCheckout() {
+    let currentUser = JSON.parse(sessionStorage.getItem('naithika_user') || 'null');
+    if (!currentUser) {
+        document.getElementById('authModalOverlay').style.display = 'flex';
+    } else {
+        checkoutWhatsApp(currentUser);
+    }
+}
+
+function checkoutWhatsApp(user) {
+    if (!user) user = JSON.parse(sessionStorage.getItem('naithika_user') || '{}');
+    const phoneNumber = "918125121347"; 
+    let cart = getCart();
+
+    if (cart.length === 0) return;
+
+    let message = "*New Order Request*\n------------------\n";
+    if (user.name) {
+        message += `*Customer Details:*\nName: ${user.name || ''}\nContact: ${user.contact_number || ''}\nEmail: ${user.email || ''}\n*Shipping Address:*\n${user.address || ''}\n------------------\n`;
+    }
+    let grandTotal = 0;
+
+    cart.forEach((item, index) => {
+        const itemTotal = item.price * item.quantity;
+        grandTotal += itemTotal;
+        message += `*${index + 1}. ${item.name}*\n`;
+        message += `   Qty: ${item.quantity}\n`;
+        message += `   Price: ₹${item.price}\n`;
+        message += `   Subtotal: ₹${itemTotal}\n\n`;
+    });
+
+    message += `------------------\n`;
+    message += `*Grand Total: ₹${grandTotal.toFixed(2)}*\n\n`;
+    message += "Please confirm availability.";
+
+    const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+    
+    try {
+        const newWindow = window.open(whatsappURL, '_blank');
+        if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
+            window.location.href = whatsappURL;
+        }
+    } catch (e) {
+        window.location.href = whatsappURL;
+    }
+}
 
 // Initial Run
 renderCart();
